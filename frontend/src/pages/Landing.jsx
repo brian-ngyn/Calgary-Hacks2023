@@ -12,11 +12,10 @@ import StepButton from '@mui/material/StepButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const steps = ["Step 1", "Step 2", "Step 3"];
+const steps = ["Teach", "Learn", "Connect"];
 const message = ["Earn money by sharing your skills with peers in your community", 
                 "Pick up a hobby and learn a new skill at an affordable price",
-                "Learn directly from like-minded peers in your community and foster new friendships"
-              ];
+                "Learn directly from like-minded peers in your community and foster new friendships"];
 
 function Landing() {
   const [error, setError] = useState("");
@@ -30,7 +29,7 @@ function Landing() {
       });
     }
   }, [user, makeUserDB])
-  
+
   useEffect(() => {
     if (docSnap != null) {
       if (docSnap.new_sign_up) {

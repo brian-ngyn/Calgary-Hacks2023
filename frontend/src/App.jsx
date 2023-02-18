@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/Home'
-import Login from './pages/Login'
+import Landing from './pages/Landing'
 import Register from './pages/Register'
 import { UserAuthContextProvider } from './authentication/UserAuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -21,7 +21,7 @@ function App() {
             <Route path="/page2" element={<ProtectedRoute><SamplePage2 /></ProtectedRoute>} />
             <Route path="/page1" element={<ProtectedRoute><SamplePage1 /></ProtectedRoute>} />
             <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path="/landing" element={<Login />} />
+            <Route path="/landing" element={<Landing />} />
             <Route path="/register" element={<Register />} />
             <Route
               path="*"

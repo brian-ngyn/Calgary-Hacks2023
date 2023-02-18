@@ -38,7 +38,7 @@ function Register() {
       field1: field1,
       field2: field2,
     }).then(() => {
-      navigate("/");
+      navigate("/home");
     });
   };
 

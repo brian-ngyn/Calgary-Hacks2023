@@ -5,8 +5,12 @@ module.exports = {
     extend: {
       colors: {
         'white': '#FAF9F6',
-        'black': '#545454',
-      }
+				'black': '#110B11',
+				'accent': '#BE2A2C'
+      },
+			fontFamily: {
+				Varela: "Varela"
+			}
     },
   },
   plugins: [],

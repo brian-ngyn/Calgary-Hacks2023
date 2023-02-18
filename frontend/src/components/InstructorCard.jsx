@@ -1,17 +1,11 @@
 
 
-function InstructorCard() {
-
+function InstructorCard({firstName, lastName, imageUrl}) {
 	return(  
-		<div className="flex flex-col shadow-md w-[350px] h-[400px] rounded-lg">
-			<img className="w-[350px] h-[250px] mb-2 rounded-t-lg" src="https://i.stack.imgur.com/34AD2.jpg"/>
+		<div className="flex flex-col shadow-md w-[350px] h-[350px] rounded-lg justify-center items-center text-center hover:cursor-pointer hover:bg-black/5 ease-in duration-300">
+			<img className="w-[150px] h-[150px] rounded-full mb-10" src={imageUrl}/>
 			<div className="px-5 w-[400px]">
-				<h2 className="font-bold">Fname Lname</h2>
-				<p className="text-sm font-thin">
-					description description description description description description
-					description description description description description description
-					description description description description description description
-				</p>
+				<h2 className="font-normal text-4xl">{firstName} {lastName}</h2>
 			</div>
 		</div>
 	)

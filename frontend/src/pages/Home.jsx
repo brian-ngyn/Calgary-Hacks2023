@@ -1,9 +1,11 @@
 import InstructorCard from "../components/InstructorCard";
 import HobbyCard from "../components/HobbyCard";
+import { UserData } from "../../data.js";
 
-const HEADER = "text-3xl font-black mb-5"
+const HEADER = "text-3xl font-bold mb-5"
 const INSTRUCTOR_CAROUSEL = "flex flex-row overflow-scroll h-fit gap-12 pb-5 w-full" 
-const HOBBY_GRID = "flex flex-row flex-wrap gap-12" 
+const HOBBY_GRID = "flex flex-row flex-wrap gap-12 mb-10" 
+
 
 function Home() {
   return (
@@ -12,14 +14,11 @@ function Home() {
 				<div className="w-11/12 h-1/2 pt-10 mb-5">
 					<h2 className={HEADER}>Recommended Instructors</h2>
 					<div className={INSTRUCTOR_CAROUSEL}>
-						<InstructorCard/>
-						<InstructorCard/>
-						<InstructorCard/>
-						<InstructorCard/>
-						<InstructorCard/>
-						<InstructorCard/>
-						<InstructorCard/>
-						<InstructorCard/>
+						{UserData.map((data, index) => {
+							return (
+								<InstructorCard key={index} {...data}/>
+							)
+						})}
 					</div>
 				</div>
 				<div>

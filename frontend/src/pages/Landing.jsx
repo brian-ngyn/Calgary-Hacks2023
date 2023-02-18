@@ -13,21 +13,15 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 const steps = ["Step 1", "Step 2", "Step 3"];
-const message = ["Step 1 Message", "Step 2 Message", "Step 3 Message"];
+const message = ["Earn money by sharing your skills with peers in your community", 
+                "Pick up a hobby and learn a new skill at an affordable price",
+                "Learn directly from like-minded peers in your community and foster new friendships"
+              ];
 
 function Landing() {
   const [error, setError] = useState("");
   const { user, docSnap, googleSignIn, makeUserDB, getUserDB } = useUserAuth();
   const navigate = useNavigate();
-
-  const handleGoogleSignIn = async (e) => {
-    e.preventDefault();
-    try {
-      await googleSignIn();
-    } catch (error) {
-      setError(error.message);
-    }
-  };
 
   useEffect(() => {
     if (user != null) {
@@ -36,7 +30,7 @@ function Landing() {
       });
     }
   }, [user, makeUserDB])
-
+  
   useEffect(() => {
     if (docSnap != null) {
       if (docSnap.new_sign_up) {
@@ -65,27 +59,33 @@ function Landing() {
     return () => clearInterval(interval);
   }, [activeStep]);
 
-
-
   return (
     <>
-      <div className="bg-white text-black min-h-screen">
+      <div className="bg-white text-black font-Varela min-h-screen">
         {
           !user && (
             <div className="bg-white text-black min-h-screen">
-              <div className="flex flex-col pt-[10%] items-center space-y-5">
-                <div className="text-7xl font-semibold">
-                  UpSkill
-                </div>
-                <div className="text-lg">
-                  "Punchline"
+              <div className="grid grid-cols-2 pt-[2%] items-center space-y-10 pr-[15%] pl-[10%]">
+                <div className="flex flex-col items-end justify-center font-semibold space-y-10">
+                  <div className="space-y-5 p-[20%]">
+                    <div className="text-5xl">
+                      Discover a new passion
+                    </div>
+                    <div className="font-light text-2xl">
+                      Share your skills with peers and build lifelong friendships
+                    </div>
+                  </div>
                 </div>
                 <div>
-                  {error && <Alert variant="danger">{error}</Alert>}
-                  <GoogleButton type="light" onClick={handleGoogleSignIn} />
+                  <div>
+                    <img src="/images/splash.png" width="800" />
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col pt-[15%] px-[15%] space-y-16">
+              <div>
+                {error && <Alert variant="danger">{error}</Alert>}
+              </div>
+              <div className="flex flex-col pt-[5%] px-[15%] space-y-12">
                 <div className="text-5xl font-semibold">
                   <div>
                     How it Works
@@ -100,20 +100,27 @@ function Landing() {
                         </Step>
                       ))}
                     </Stepper>
-                    <div className="mx-10 mt-20">
+                    <div className="mx-10 mt-16">
                       <React.Fragment>
-                        <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
+                        <div className="flex justify-center font-light text-xl pl-[10%] pr-[10%] min-h-[6rem]">
                           {message[activeStep]}
-                        </Typography>
+                        </div>
                       </React.Fragment>
                     </div>
                   </div>
                 </div>
-                <div className="text-5xl font-semibold">
-                  Testimonials
-                </div>
-                <div className="text-5xl font-semibold">
-                  Get Started
+                <div>
+                  <div className="text-5xl font-semibold">
+                    Testimonials
+                  </div>
+                  <div className="grid grid-cols-2 items-center">
+                    <div>
+                      <img src="/images/testimonial.png" width="800" />
+                    </div>
+                    <div className="font-light text-2xl pl-[5%] pr-[17%]">
+                      Join your community in teaching and learning new skills while making new friends.
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

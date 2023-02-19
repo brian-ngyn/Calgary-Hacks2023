@@ -12,22 +12,22 @@ function Portfolio() {
         <div className="flex flex-col">
           <div className="grid grid-cols-3 grid-rows-2">
             <div className="col-span-1 row-span-2">
-              <Avatar src={data.imageUrl} sx={{ width: 250, height: 250 }}/>
+              <Avatar src={data.photoUrl} sx={{ width: 250, height: 250 }}/>
             </div>
             <div className="flex items-center col-span-2 row-span-1 text-5xl font-semibold">
               <div>
-                {data.firstName} {data.lastName}
+                {data.fName} {data.lName}
               </div>
             </div>
             <div className="col-span-1 row-span-1 text-2xl font-semibold">
-              <button onClick={() => {console.log("button clicked")}}class="bg-red text-white font-semibold py-3 px-10 rounded">
+              <button onClick={() => {console.log("button clicked")}} className="bg-red text-white font-semibold py-3 px-10 rounded">
                 Connect
               </button>
             </div>
           </div>
           <div>
             <div className="text-xl pt-[5%]">
-              {data.description}
+              {data.funFact}
             </div>
           </div>
           <div className="text-3xl font-semibold pt-[5%]">

@@ -1,11 +1,11 @@
-function SamplePage1() {
+function Teach() {
   return (
     <>
       <div>
         <div className="bg-white text-black min-h-screen">
           <div className="flex flex-col justify-center items-center h-screen">
             <div>
-              Sample Page 1
+              Teaching Page
             </div>
           </div>
         </div>
@@ -14,4 +14,4 @@ function SamplePage1() {
   )
 }
 
-export default SamplePage1;
+export default Teach;

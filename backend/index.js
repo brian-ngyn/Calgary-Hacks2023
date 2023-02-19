@@ -65,6 +65,13 @@ app.get("/skills", (req, res) => {
   });
 });
 
+app.get("/getUser/:uuid", (req, res) => {
+  db.collection("users").doc(req.params.uuid).get().then((doc) => {
+    res.send(doc.data());
+  }).catch((err) => {
+    res.send(err);
+  });
+});
 
 
 

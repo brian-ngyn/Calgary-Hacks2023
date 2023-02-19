@@ -135,3 +135,86 @@ export const UserData = [
     ]
   },
 ]
+
+export const SkillsData = [
+  {
+    name: "Hiking",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 123
+  },
+  {
+    name: "Cycling",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 89
+  },
+  {
+    name: "Swimming",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 56
+  },
+  {
+    name: "Cooking",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 178
+  },
+  {
+    name: "Gardening",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 67
+  },
+  {
+    name: "Reading",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 234
+  },
+  {
+    name: "Playing Music",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 45
+  },
+  {
+    name: "Photography",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 112
+  },
+  {
+    name: "Painting",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 98
+  },
+  {
+    name: "Drawing",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 76
+  },
+  {
+    name: "Yoga",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 143
+  },
+  {
+    name: "Meditation",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 67
+  },
+  {
+    name: "Traveling",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 199
+  },
+  {
+    name: "Playing Sports",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 112
+  },
+  {
+    name: "Video Games",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 256
+  },
+  {
+    name: "Watching Movies",
+    imageURL: "https://images.unsplash.com/photo-1519681393784-d120267933ba",
+    numOfUsers: 189
+  }
+]

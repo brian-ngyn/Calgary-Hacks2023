@@ -66,19 +66,6 @@ app.put('/createPortfolio', (req, res) => {
     })
 })
 
-app.get("/portfolio/:uuid/:skill", (req, res) => {
-  db.collection("user").doc(req.params.uuid).collection("portfolios").get().then((snapshot) => {
-    const portfolios = [];
-    snapshot.data().portfolio.forEach((doc) => {
-      if(doc.skill === req.params.skill)
-        portfolios.push(doc.data());
-    });
-    res.send(portfolios);
-  }).catch((err) => {
-    res.send(err);
-  });
-});
-
 app.get('/skills', (req, res) => {
   console.log('Inside skills')
   db.collection('categories')

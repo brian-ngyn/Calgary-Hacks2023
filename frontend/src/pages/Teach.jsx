@@ -2,32 +2,116 @@ import { useUserAuth } from "../authentication/UserAuthContext";
 import { Avatar, IconButton, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { TextField } from "@mui/material";
+import Select from '@mui/material/Select';
+import { borderRadius } from "@mui/system";
+import {storage} from "../authentication/firebaseConfig.js"
+import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage"
 
 function Teach() {
   const { docSnap } = useUserAuth();
   const [open, setOpen] = useState(false);
   const [skillList, setSkillList] = useState([]);
+  const [skill, setSkill] = useState("");
   const [description, setDescription] = useState("");
   const [hourlyRate, setHourlyRate] = useState("");
-	console.log(docSnap);
+  const [media, setMedia] = useState([]);
+  const [mediaURLs, setMediaURLs] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setDescription("");
+    setHourlyRate("");
+    setHourlyRate("");
+    setSkill("");
+    setMedia([]);
+    setMediaURLs([]);
     setOpen(false);
   };
 
-  // useEffect(() => {
-  //   axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/skills").then((res) => {
-  //     setSkillList(res.data);
-  //   })
-  // }, []);
+  const handleChange = (event) => {
+    console.log("change")
+    console.log(event);
+    if (event.target.name === "skill"){
+      console.log(event.target.value);
+      setSkill(event.target.value);
+    }
+    if (event.target.name === "description"){
+      console.log(event.target.value);
+      setDescription(event.target.value);
+    }
+    if (event.target.name === "hourlyRate"){
+      console.log(event.target.value);
+      setHourlyRate(event.target.value);
+    }
+  }
+
+  const submit = () => {
+    const data = JSON.stringify({
+      user: docSnap,
+      skill,
+      description,
+      hourlyRate,
+      mediaURLs
+    });
+    setDescription("");
+    setHourlyRate("");
+    setHourlyRate("");
+    setSkill("");
+    setMedia([]);
+    setMediaURLs([]);
+    setOpen(false);
+    axios.post(`https://4ltkqflxgpkhdmqkrjm5w3ia340gceyn.lambda-url.us-west-1.on.aws/createPortfolio?uid=${docSnap.id}`,data)
+    console.log(data);
+  }
+
+  useEffect(() => {
+    axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/skills").then((res) => {
+      setSkillList(res.data);
+      console.log("skillList",res.data);
+    })
+  }, []);
+
+  const handleFileUpload = (event) => {
+    if (!event.target.files){
+      return;
+    }
+    const files = event.target.files;
+    console.log("files",files)
+    for(const file of files){
+      console.log(file);
+      setMedia(media => [...media,file]);
+      const storageRef = ref(storage, `/profilephotos/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const percent = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    // update progress
+                    console.log("percent",percent);
+                },
+                (err) => console.log(err),
+                () => {
+                    // download url
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                        console.log("url",url);
+                        setMediaURLs(mediaURLs => [...mediaURLs,url]);
+                    });
+                }
+            ); 
+    };
+  }
 
   return (
     <>
@@ -69,53 +153,69 @@ function Teach() {
               <div className="text-3xl font font-semibold">
                 Create a new portfolio
               </div>
-              <div className="grid grid-cols-2">
-                <div className="">
-                  <div className='text-xl col-span-2'>
-                    Skill
-                  </div>
-                  <div>
-                    {skillList.map((skill, index) => {
-                      return (
-                        <div className="col-span-1">
-                          <img src={skill.picture_Url} />
-                          <div>
-                            {skill.name}
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
+              <InputLabel htmlFor="Skill">Select a skill</InputLabel>
+              <Select
+                value={skill}
+                id="Skill"
+                label=""
+                name="skill"
+                onChange={(e) => handleChange(e)}
+                displayEmpty
+              >
+                {skillList.map((s)=>
+                  <MenuItem value={s.name}>{s.name}</MenuItem>
+                )}
+              </Select>
+              <div className="grid grid-cols-2 gap-5">
+                <div className="text-xl col-span-3">
+                  <InputLabel htmlFor="outlined-adornment-desc">Description</InputLabel>
+                  <OutlinedInput
+                    value={description}
+                    onChange={(e)=>{handleChange(e)}}
+                    fullWidth
+                    name="description"
+                    id="outlined-adornment-desc"
+                  />
                 </div>
                 <div className="text-xl col-span-3">
-                  <div>
-                    Description
-                  </div>
-                  <div>
-                    <TextField
-                      required
-                      id="outlined"
-                      label="Description"
-                      value={description}
-                      style={{ width: 250 }}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </div>
+                  <InputLabel htmlFor="outlined-adornment-amount">Hourly Rate</InputLabel>
+                  <OutlinedInput
+                    value={hourlyRate}
+                    onChange={(e)=>{handleChange(e)}}
+                    name="hourlyRate"
+                    fullWidth
+                    id="outlined-adornment-amount"
+                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                  />
                 </div>
                 <div className="text-xl col-span-3">
-                  <div>
-                    Hourly Rate
+                <Button
+                    component="label"
+                    variant="outlined"
+                    fullWidth
+                    onChange={(e)=>handleFileUpload(e)}
+                  >
+                    Upload Media
+                    <input multiple type="file" accept=".png, .jpg, .jpeg, .mp4" hidden />
+                  </Button>
+                </div>
+                  <div className="flex text-sm flex-col">
+                    {media.map((m) => 
+                      <div>
+                        Media: {m.name}
+                      </div>
+                    )}
                   </div>
-                  <div>
-                  <TextField
-                      required
-                      id="outlined"
-                      label="Hourly Rate"
-                      value={hourlyRate}
-                      style={{ width: 250 }}
-                      onChange={(e) => setHourlyRate(e.target.value)}
-                    />
-                  </div>
+                <div className="text-md justify-center w-[100%] col-span-3">
+                  <Button
+                    variant="contained"
+                    onClick={submit}
+                    fullWidth
+                    sx={{color:"#ffffff", borderRadius:"0px", backgroundColor:"#BE2A2C", boxShadow:"none", "&:hover":{color:"#ffffff", borderRadius:"0px", backgroundColor:"#BE2A2C", boxShadow:"none"}}}
+                    disabled={description===""||hourlyRate===""}
+                  >
+                    Submit
+                  </Button>
                 </div>
               </div>
             </div>

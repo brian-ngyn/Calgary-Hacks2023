@@ -15,7 +15,7 @@ const SendMessage = ({ scroll }) => {
     }
     console.log('here')
     axios
-      .get('http://localhost:3001/bad-words/' + message)
+      .get('https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/bad-words/' + message)
       .then((response) => {
         console.log(response)
         if (response.data.bad == true) {

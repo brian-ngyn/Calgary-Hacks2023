@@ -1,10 +1,14 @@
 const express = require('express')
 const app = express()
-//const cors = require('cors')
+// const cors = require('cors')
 const multer = require('multer')
 var crypto = require('crypto')
 var shasum = crypto.createHash('sha1')
 const serverless = require('serverless-http')
+const axios = require('axios').default;
+var querystring = require('querystring');
+const cors = require('cors')
+
 
 const admin = require('firebase-admin')
 
@@ -32,8 +36,42 @@ admin.initializeApp({
 const db = admin.firestore()
 const bucket = admin.storage().bucket()
 
+app.use(cors());
 app.use(express.json());
 app.use(express.static("./public"));
+
+
+app.get("/bad-words/:text", (req, res) => {
+  const userId = 'ajayarumugam07';
+  const apiKey = 'ekE3kKCcvAyBDtHfgzIbZtONZI43q3tBSObHCZIjeEB0yjJh';
+  console.log("here");
+
+  const data = new URLSearchParams();
+  data.append('content', req.params.text);
+  console.log(data)
+
+  const headers = {
+    'User-ID': 'ajayarumugam07',
+    'API-Key': 'ekE3kKCcvAyBDtHfgzIbZtONZI43q3tBSObHCZIjeEB0yjJh',
+    'Content-Type': 'application/x-www-form-urlencoded'
+  };
+
+  axios.post('https://neutrinoapi.net/bad-word-filter', data, { headers })
+  .then(response => {
+    console.log(response)
+    if (response.data['is-bad']) {
+      res.send({ bad: true });
+    } 
+    else {
+      res.send({ bad: false });
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    res.send(error)
+  });
+});
+
 
 app.post('/createPortfolio/:uuid', (req, res) => {
   let existingPortfolio = []

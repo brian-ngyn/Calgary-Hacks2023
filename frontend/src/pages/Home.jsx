@@ -30,23 +30,24 @@ function Home() {
 	useEffect(() => {
 		axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/skills")
 		.then((response) => setSkillData(response.data));
-		axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/allUsers")
+		axios.get(`https://4ltkqflxgpkhdmqkrjm5w3ia340gceyn.lambda-url.us-west-1.on.aws/reccomendations/${docSnap.id}`)
 		.then((response) => {
 			setUserList(response.data);
 			setLoadingRecUsers(false);
+			// COMMENTING OUT BRIAN'S CLIENT SIDE LOGIC AND JUST USING THE RECOMMENDATIONS API
 			// in response.data there is a portfolio which is an array. in each element of the array there is a skill field. set the skillcount for the total amount of times that skill appears in the portfolio array
-			response.data.forEach((user) => {
-				if (user.id != docSnap.id){
-					user.portfolio.forEach((skill) => {
-						setSkillCounts((prev) => {
-							return {
-								...prev,
-								[skill.skill]: prev[skill.skill] + 1
-							}
-						})
-					})
-				}
-			})
+			// response.data.forEach((user) => {
+			// 	if (user.id != docSnap.id){
+			// 		user.portfolio.forEach((skill) => {
+			// 			setSkillCounts((prev) => {
+			// 				return {
+			// 					...prev,
+			// 					[skill.skill]: prev[skill.skill] + 1
+			// 				}
+			// 			})
+			// 		})
+			// 	}
+			// })
 		});
 	}, []);
 

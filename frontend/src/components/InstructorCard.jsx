@@ -61,9 +61,9 @@ function InstructorCard( props ) {
 				<div className="px-5 w-60">
 					<h2 className="font-header text-2xl mb-1" >{data.fName} {data.lName}</h2>
 					<ul className="flex flex-wrap gap-2 justify-items-start justify-center">
-						{data.interests.slice(0, 3).map((data, index) => {
+						{data.portfolio.slice(0, 3).map((data, index) => {
 							return(
-								<li key={index} className="text-sm font-thin bg-accent/10 rounded-full h-5 px-2 text-accent">{data}</li>
+								<li key={index} className="text-sm font-thin bg-accent/10 rounded-full h-5 px-2 text-accent">{data.skill}</li>
 							)
 						})}
 					</ul>
@@ -79,9 +79,9 @@ function InstructorCard( props ) {
 							Select a skill to learn from {data.fName}
 						</div>
 						<ul className="flex flex-wrap gap-2 justify-items-start justify-center">
-							{data.interests.map((data, index) => {
+							{data.portfolio.map((data, index) => {
 								return(
-									<li key={index} className="text-sm bg-accent/10 rounded-full h-5 px-2 text-accent hover:cursor-pointer" onClick={()=>selectSkill(data)}>{data}</li>
+									<li key={index} className="text-sm bg-accent/10 rounded-full h-5 px-2 text-accent hover:cursor-pointer" onClick={()=>selectSkill(data.skill)}>{data.skill}</li>
 								)
 							})}
 						</ul>

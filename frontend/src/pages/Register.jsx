@@ -37,7 +37,7 @@ function Register() {
   const [funFact, setFunFact] = useState("");
   const [interests, setInterests] = useState([]);
   const [photo, setPhoto] = useState("");
-  const [photoUrl, setPhotoUrl] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg");
   const submitRegistration = () => {
     updateDB({
       new_sign_up: false,
@@ -227,7 +227,7 @@ function Register() {
                     Photo: {photo.name}
                 </div> : null}
                 <div className="flex justify-center col-span-2">
-                  {major != "" && funFact != "" && photo != "" ? (
+                  {major != "" && funFact != "" ? (
                     <Button
                       variant="contained"
                       onClick={submitRegistration}

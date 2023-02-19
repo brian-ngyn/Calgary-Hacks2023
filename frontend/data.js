@@ -10,7 +10,8 @@ export const UserData = [
 			"Guitar",
 			"Arts and Craft",
 			"Piano",
-			"Darts"
+			"Darts",
+			"Chess"
 		],
 		portfolio: [
 			{

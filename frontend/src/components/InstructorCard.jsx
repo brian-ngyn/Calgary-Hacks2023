@@ -1,21 +1,36 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoopIcon from '@mui/icons-material/Loop';
 
+const SWAP_ICON = {color: "#F7F7F7"}
 function InstructorCard( props ) {
+	const [swap, setSwap] = useState(false);
 	const navigate = useNavigate();
 	const data = props.data;
+	const user = props.user;
+
+	console.log(user);
+
 	const handleClick = () => {
 		navigate("/portfolio/" + data.firstName + data.lastName, { state: data });
 	}
 
+	const isSwappable = (skill) => data.interests.includes(skill)
+
+	useEffect(() => {
+		if (user.categories.every(isSwappable)) {
+			setSwap(true);
+		}
+	}, []);
+
 	return(  
 		<div
-			className="flex flex-col w-[250px] h-[250px] rounded-lg justify-center items-center text-center hover:cursor-pointer hover:bg-black/5 ease-in duration-300 static"
+			className="shadow-md flex flex-col w-[250px] h-[250px] rounded-lg justify-center items-center text-center hover:cursor-pointer hover:bg-black/5 ease-in duration-300 static"
 			onClick={() => handleClick()}
 		>
-			<div className="bg-accent w-8 h-8 rounded-full relative animate-bounce top-0 self-end p-auto">
-				<LoopIcon/>
-			</div>
+		{swap && <div className="bg-accent w-8 h-8 rounded-full relative -top-0 right-2 self-end pt-[2.5px] justify-center">
+				<LoopIcon sx={SWAP_ICON}/>
+			</div>}
 			<img className="w-[100px] h-[100px] rounded-full mb-4" src={data.imageUrl}/>
 			<div className="px-5 w-60">
 				<h2 className="font-bold text-2xl mb-1" >{data.firstName} {data.lastName}</h2>

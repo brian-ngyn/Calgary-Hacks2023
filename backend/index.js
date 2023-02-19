@@ -130,6 +130,23 @@ app.get("/getUser/:uuid", (req, res) => {
   });
 });
 
+app.get("/getCount/:skill/:uuid", (req, res) => {
+  let count = 0;
+  db.collection("user").get().then((snapshot) => {
+    snapshot.forEach((user) => {
+      console.log(user);
+      user.data().portfolio.forEach((portfolio) => {
+        if (portfolio.skill === req.params.skill && user.id !== req.params.uuid) {
+          count++;
+        }
+      });
+    });
+    res.send([count]);
+  }).catch((err) => {
+    console.log(err);
+  });
+});
+
 app.get("/portfolios/:uuid", (req, res) => {
   db.collection("user").doc(req.params.uuid).collection("portfolios").get().then((snapshot) => {
     const portfolios = [];

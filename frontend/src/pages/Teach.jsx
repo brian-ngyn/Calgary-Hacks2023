@@ -69,7 +69,7 @@ function Teach() {
     setMedia([]);
     setMediaURLs([]);
     setOpen(false);
-    axios.post(`https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/createPortfolio/${docSnap.id}`,data)
+    axios.post(`https://4ltkqflxgpkhdmqkrjm5w3ia340gceyn.lambda-url.us-west-1.on.aws/createPortfolio/${docSnap.id}`,data)
     console.log(data);
   }
 

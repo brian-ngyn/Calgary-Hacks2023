@@ -25,7 +25,7 @@ function InstructorCard( props ) {
 
 	const selectSkill = (skill) => {
 		console.log(skill);
-		navigate("/portfolio/" + data.id, { state: data });
+		navigate("/portfolio/" + skill, { state: data });
 	}
 
 	useEffect(() => {

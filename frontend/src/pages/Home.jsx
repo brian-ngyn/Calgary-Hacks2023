@@ -1,22 +1,24 @@
 import { useState, useEffect } from "react";
 import InstructorCard from "../components/InstructorCard";
 import SkillCard from "../components/SkillCard";
-import { UserData, SkillsData } from "../../data.js";
 import { useUserAuth } from "../authentication/UserAuthContext";
 import axios from "axios";
 
-const HEADER = "text-4xl font-black mb-5 text-accent"
+const HEADER = "text-4xl font-black mb-5 text-black border-b-4 border-accent w-fit pb-2"
 const INSTRUCTOR_CAROUSEL = "flex flex-row overflow-scroll h-fit gap-12 pb-5 no-scrollbar" 
-const HOBBY_GRID = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-10" 
+const HOBBY_GRID = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 pb-10" 
 
 function Home() {
 	const { docSnap } = useUserAuth();
 	const [skillData, setSkillData] = useState(null);
-	console.log(docSnap);
+	const [userList, setUserList] = useState(null);
+	// console.log(docSnap);
 
 	useEffect(() => {
-		axios.get("https://4ltkqflxgpkhdmqkrjm5w3ia340gceyn.lambda-url.us-west-1.on.aws/skills")
+		axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/skills")
 		.then((response) => setSkillData(response.data));
+		axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/allUsers")
+		.then((response) => setUserList(response.data));
 	}, []);
 
   return (
@@ -31,10 +33,12 @@ function Home() {
 							you out! Click on any of their tiles to find out more about them and get connected!
 						</p>
 						<div className={INSTRUCTOR_CAROUSEL}>
-							{UserData.map((data, index) => {
-								return (
-									<InstructorCard key={index} data={data}/>
-								)
+							{userList && userList.map((data, index) => {
+								if (!data.new_sign_up && data.id !== docSnap.id){
+									return (
+										<InstructorCard key={index} data={data} user={docSnap}/>
+									)
+								}
 							})}
 						</div>
 					</div>

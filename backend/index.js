@@ -32,9 +32,6 @@ admin.initializeApp({
 const db = admin.firestore()
 const bucket = admin.storage().bucket()
 
-
-app.use(cors());
-app.options('*', cors())
 app.use(express.json());
 app.use(express.static("./public"));
 
@@ -82,7 +79,44 @@ app.get("/instructors/:sport", (req, res) => {
     });
     res.send(instructors);
    });
-   });
+  });
+
+  app.get("/allUsers", (req, res) => {  
+    db.collection("user").get().then((snapshot) => {  
+      const users = [];
+      snapshot.forEach((doc) => {
+        users.push(doc.data());
+      });
+      res.send(users);
+    }).catch((err) => {
+      console.log(err);
+    });
+  });
+
+  app.get("/reccomendations/:uuid", (req, res) => {
+    db.collection("user").doc(req.params.uuid).get().then((user) => {
+      const reccomendations = [];
+      db.collection("user").get().then((allUsers) => {
+        allUsers.forEach((otherUser) => {
+          otherUser.get("portfolios").then((otherUserPortfolio) => {
+            otherUserPortfolio.forEach((portfolio) => {
+              portfolios.get().then((portfolio) => {
+                if (user.get("skills").includes(portfolio.get("skill") && req.params.uuid != otherUser.id)) {
+                  reccomendations.push(otherUser.data());
+                }
+              });
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            });
+        });
+      });
+      reccomendations
+      res.send(reccomendations);
+    });
+  });
+    
 
 app.get("/getUser/:uuid", (req, res) => {
   db.collection("users").doc(req.params.uuid).get().then((doc) => {

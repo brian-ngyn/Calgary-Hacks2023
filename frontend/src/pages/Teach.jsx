@@ -86,16 +86,6 @@ function Teach() {
     axios.put("http://localhost:3001/createPortfolio", data).then((res) => {
       console.log("res", res);
     });
-    // const request = {
-    //   data: data,
-    //   headers: {
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Content-Type': 'application/json',
-    //   },
-    // }
-    // axios.put("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/createPortfolio", request).then((res) => {
-    //   console.log("res", res);
-    // });
     console.log(data);
   }
 

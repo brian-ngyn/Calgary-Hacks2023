@@ -66,7 +66,7 @@ app.put('/createPortfolio', (req, res) => {
     })
 })
 
-get.app("/portfolio/:uuid/:skill", (req, res) => {
+app.get("/portfolio/:uuid/:skill", (req, res) => {
   db.collection("user").doc(req.params.uuid).collection("portfolios").get().then((snapshot) => {
     const portfolios = [];
     snapshot.data().portfolio.forEach((doc) => {
@@ -166,11 +166,27 @@ app.get("/getUser/:uuid", (req, res) => {
   });
 });
 
-app.get("/portfolios/:uuid", (req, res) => {
-  db.collection("user").doc(req.params.uuid).collection("portfolios").get().then((snapshot) => {
+app.get("/portfolio/:uuid/:skill", (req, res) => {
+  db.collection("user").doc(req.params.uuid).get().then((snapshot) => {
     const portfolios = [];
-    snapshot.forEach((doc) => {
-      portfolios.push(doc.data());
+    snapshot.data().portfolio.forEach((doc) => {
+      if(doc.skill === req.params.skill){
+        portfolios.push(doc);
+      }
+    });
+
+    res.send(portfolios);
+  }).catch((err) => {
+    res.send(err);
+  });
+});
+
+app.get("/portfolios/:uuid", (req, res) => {
+  db.collection("user").doc(req.params.uuid).get().then((snapshot) => {
+    const portfolios = [];
+    snapshot.data().portfolio.forEach((doc) => {
+      console.log(doc);
+      portfolios.push(doc);
     });
     res.send(portfolios);
   }).catch((err) => {

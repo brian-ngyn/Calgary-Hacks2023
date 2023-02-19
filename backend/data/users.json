@@ -1,0 +1,88 @@
+[
+    {
+      "id": "KRyrsIChIuTZK9lLDGjXHR6gIZJ3",
+      "birthday": "11/01/2002",
+      "fname": "David",
+      "lname": "Wave",
+      "funFact": "i used to play hockey in NFL",
+      "categories": ["Skiing"],
+      "major": "software engg",
+      "year": "1",
+      "portfolios": 
+      {
+        "id": "002",
+        "portfolios": 
+        [
+          {
+              "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fjordan-whitfield-BhfE1IgcsA8-unsplash.jpg?alt=media&token=ad852c08-cb52-497d-9a6e-ab84ea54c67f",
+              "hourlyRate": 10,
+              "skillTaught": "Piano"
+          },
+          {
+              "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fde-an-sun-b57RqS-nQ1c-unsplash.jpg?alt=media&token=57c84e7b-2cd3-410c-bc3a-a44b45bbc92c",
+              "hourlyRate": 21,
+              "skillTaught": "Guitar"
+          }
+        ]
+      }
+    },
+    {
+        "id": "sAbuECvgMdXm3f4wIpd3roga4j42",
+        "birthday": "11/01/2002",
+        "fname": "Mike",
+        "lname": "Scott",
+        "funFact": "i like hiking",
+        "categories": [ "Chess", "Tennis"],
+        "major": "CS",
+        "year": "3",
+        "portfolios": 
+        {
+            "id": "003",
+            "portfolios": 
+            [
+              {
+                  "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fjordan-whitfield-BhfE1IgcsA8-unsplash.jpg?alt=media&token=ad852c08-cb52-497d-9a6e-ab84ea54c67f",
+                  "hourlyRate": 10,
+                  "skillTaught": "Piano"
+              },
+              {
+                  "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fde-an-sun-b57RqS-nQ1c-unsplash.jpg?alt=media&token=57c84e7b-2cd3-410c-bc3a-a44b45bbc92c",
+                  "hourlyRate": 21,
+                  "skillTaught": "Guitar"
+              },
+              {
+                "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fbenjamin-hayward-YIO9Fb7BJIU-unsplash.jpg?alt=media&token=c0eb9476-16f2-40af-a896-24c248ca7a72",
+                "hourlyRate": 30,
+                "skillTaught": "Snowboarding"
+            }
+            ]
+        }
+    },
+    {
+        "id": "xcQFr5ElsqVVFodV4Y1ePUmAVzj2",
+        "birthday": "11/01/2002",
+        "fname": "Evan",
+        "lname": "yosin",
+        "funFact": "i like to juggle",
+        "categories": [ "Snowboarding", "Tennis"],
+        "major": "CS",
+        "year": "4",
+        "portfolios": 
+        {
+            "id": "002",
+            "portfolios": 
+            [
+              {
+                  "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fjordan-whitfield-BhfE1IgcsA8-unsplash.jpg?alt=media&token=ad852c08-cb52-497d-9a6e-ab84ea54c67f",
+                  "hourlyRate": 10,
+                  "skillTaught": "Piano"
+              },
+              {
+                  "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fde-an-sun-b57RqS-nQ1c-unsplash.jpg?alt=media&token=57c84e7b-2cd3-410c-bc3a-a44b45bbc92c",
+                  "hourlyRate": 21,
+                  "skillTaught": "Guitar"
+              }
+            ]
+        }
+    }
+]

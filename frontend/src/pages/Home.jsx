@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import InstructorCard from "../components/InstructorCard";
 import SkillCard from "../components/SkillCard";
-import { UserData } from "../../data.js";
 import { useUserAuth } from "../authentication/UserAuthContext";
 import axios from "axios";
 
@@ -12,11 +11,14 @@ const HOBBY_GRID = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 pb-10"
 function Home() {
 	const { docSnap } = useUserAuth();
 	const [skillData, setSkillData] = useState(null);
+	const [userList, setUserList] = useState(null);
 	// console.log(docSnap);
 
 	useEffect(() => {
 		axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/skills")
 		.then((response) => setSkillData(response.data));
+		axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/allUsers")
+		.then((response) => setUserList(response.data));
 	}, []);
 
   return (
@@ -31,10 +33,12 @@ function Home() {
 							you out! Click on any of their tiles to find out more about them and get connected!
 						</p>
 						<div className={INSTRUCTOR_CAROUSEL}>
-							{UserData.map((data, index) => {
-								return (
-									<InstructorCard key={index} data={data} user={docSnap}/>
-								)
+							{userList && userList.map((data, index) => {
+								if (!data.new_sign_up && data.id !== docSnap.id){
+									return (
+										<InstructorCard key={index} data={data} user={docSnap}/>
+									)
+								}
 							})}
 						</div>
 					</div>

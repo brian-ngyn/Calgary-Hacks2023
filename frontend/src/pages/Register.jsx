@@ -20,13 +20,7 @@ function Register() {
   const { user, updateDB } = useUserAuth();
   const navigate = useNavigate();
   const interestSelections = [
-    'Interest A',
-    'Interest B',
-    'Interest C',
-    'Interest D',
-    'Interest E',
-    'Interest F',
-    'Interest G',
+    "Piano", "Snowboarding", "Skiing", "Guitar", "Cooking", "Swimming", "Photography", "Chess","Tennis", "Ping Pong"
   ]
 
   const [year, setYear] = useState("1");

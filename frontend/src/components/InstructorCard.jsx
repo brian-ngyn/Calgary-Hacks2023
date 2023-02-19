@@ -28,9 +28,13 @@ function InstructorCard( props ) {
 			className="shadow-md flex flex-col w-[250px] h-[250px] rounded-lg justify-center items-center text-center hover:cursor-pointer hover:bg-black/5 ease-in duration-300 static"
 			onClick={() => handleClick()}
 		>
-		{swap && <div className="bg-accent w-8 h-8 rounded-full relative -top-0 right-2 self-end pt-[2.5px] justify-center">
+			{swap && 
+			
+			<div className="bg-accent w-8 h-8 rounded-full self-end flex justify-center items-center relative top-0 right-2">
 				<LoopIcon sx={SWAP_ICON}/>
-			</div>}
+			</div>
+			
+			}
 			<img className="w-[100px] h-[100px] rounded-full mb-4" src={data.imageUrl}/>
 			<div className="px-5 w-60">
 				<h2 className="font-bold text-2xl mb-1" >{data.firstName} {data.lastName}</h2>

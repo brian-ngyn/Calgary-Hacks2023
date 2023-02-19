@@ -139,27 +139,30 @@ app.get('/instructors/:sport', (req, res) => {
       })
     });
 
-
-
   });
     
 
-app.get('/portfolios/:uuid', (req, res) => {
-  db.collection('user')
-    .doc(req.params.uuid)
-    .collection('portfolios')
-    .get()
-    .then((snapshot) => {
-      const portfolios = []
-      snapshot.forEach((doc) => {
-        portfolios.push(doc.data())
-      })
-      res.send(portfolios)
-    })
-    .catch((err) => {
-      res.send(err)
-    })
-})
+app.get("/getUser/:uuid", (req, res) => {
+  db.collection("users").doc(req.params.uuid).get().then((doc) => {
+    res.send(doc.data());
+
+  }).catch((err) => {
+    res.send(err);
+  });
+});
+
+app.get("/portfolios/:uuid", (req, res) => {
+  db.collection("user").doc(req.params.uuid).collection("portfolios").get().then((snapshot) => {
+    const portfolios = [];
+    snapshot.forEach((doc) => {
+      portfolios.push(doc.data());
+    });
+    res.send(portfolios);
+  }).catch((err) => {
+    res.send(err);
+  });
+});
+
 
 const port = process.env.PORT || 3001
 if (process.env.ENVIRONMENT === 'production') {

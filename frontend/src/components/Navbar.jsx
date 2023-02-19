@@ -41,6 +41,14 @@ function Navbar() {
               >
                 Teach
               </Link>
+              
+              <Link
+                className="text-l text-black hover:cursor-pointer hover:before:scale-x-100 hover:before:origin-left relative before:w-full before:h-0.5 before:origin-right before:transition-transform before:duration-300 before:scale-x-0 before:bg-[#545454] before:absolute before:left-0 before:bottom-0"
+                to="/message"
+              >
+                Message
+              </Link>
+      
               <div
                 className="text-l text-black hover:cursor-pointer hover:before:scale-x-100 hover:before:origin-left relative before:w-full before:h-0.5 before:origin-right before:transition-transform before:duration-300 before:scale-x-0 before:bg-[#545454] before:absolute before:left-0 before:bottom-0"
                 onClick={(e) => logout(e)}

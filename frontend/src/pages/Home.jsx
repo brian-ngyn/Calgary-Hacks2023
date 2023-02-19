@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
 import InstructorCard from "../components/InstructorCard";
 import SkillCard from "../components/SkillCard";
 import { UserData, SkillsData } from "../../data.js";
 import { useUserAuth } from "../authentication/UserAuthContext";
+import axios from "axios";
 
 const HEADER = "text-4xl font-black mb-5 text-accent"
 const INSTRUCTOR_CAROUSEL = "flex flex-row overflow-scroll h-fit gap-12 pb-5 no-scrollbar" 
@@ -9,9 +11,17 @@ const HOBBY_GRID = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-10"
 
 function Home() {
 	const { docSnap } = useUserAuth();
+	const [skillData, setSkillData] = useState(null);
 	console.log(docSnap);
+
+	useEffect(() => {
+		axios.get("https://4ltkqflxgpkhdmqkrjm5w3ia340gceyn.lambda-url.us-west-1.on.aws/skills")
+		.then((response) => setSkillData(response.data));
+	}, []);
+
   return (
     <>
+		{skillData ? (
 			<div className="px-[9%] bg-white font-Varela text-black">
 				<div>
 					<div className="h-1/2 pt-10 mb-5">
@@ -38,15 +48,19 @@ function Home() {
 					</div>
 					<div className={HOBBY_GRID}>
 						{
-							SkillsData.map((data, index) => {
+							skillData.map((data, index) => {
 								return (
 									<SkillCard key={index} data={data}/>
 								)
 						})}
 					</div>
 				</div>
-				
 			</div>
+
+		): (
+			<div className="bg-white min-h-screen"/>
+		)
+		}
     </>
   )
 }

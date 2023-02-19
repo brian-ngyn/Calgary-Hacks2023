@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const cors = require('cors')
+//const cors = require('cors')
 const multer = require('multer')
 var crypto = require('crypto')
 var shasum = crypto.createHash('sha1')
@@ -163,6 +163,21 @@ app.get("/portfolios/:uuid", (req, res) => {
   });
 });
 
+app.get("/getCount/:skill/:uuid", (req, res) => { 
+  db.collection("user").get().then((snapshot) => {
+    let count = 0;
+    snapshot.forEach((doc) => {
+      doc.data().portfolio.forEach((portfolio) => { 
+        if (portfolio.skill === req.params.skill && doc.id !== req.params.uuid) {
+          count++;
+        }
+      })
+    });
+    res.send(count.toString());
+  }).catch((err) => {
+    console.log(err);
+  });
+});
 
 const port = process.env.PORT || 3001
 if (process.env.ENVIRONMENT === 'production') {

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import InstructorCard from "../components/InstructorCard";
 import SkillCard from "../components/SkillCard";
 import { useUserAuth } from "../authentication/UserAuthContext";
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from "axios";
 
 const HEADER = "text-4xl font-header mb-5 text-black border-b-4 border-accent w-fit pb-2"
@@ -12,6 +13,7 @@ function Home() {
 	const { docSnap } = useUserAuth();
 	const [skillData, setSkillData] = useState(null);
 	const [userList, setUserList] = useState(null);
+	const [loadingRecUsers, setLoadingRecUsers] = useState(true);
 	const [skillCounts, setSkillCounts] = useState({
 		"Piano": 0,
 		"Skiing": 0,
@@ -31,6 +33,7 @@ function Home() {
 		axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/allUsers")
 		.then((response) => {
 			setUserList(response.data);
+			setLoadingRecUsers(false);
 			// in response.data there is a portfolio which is an array. in each element of the array there is a skill field. set the skillcount for the total amount of times that skill appears in the portfolio array
 			response.data.forEach((user) => {
 				if (user.id != docSnap.id){
@@ -58,15 +61,19 @@ function Home() {
 							Based on your interests and skills, we picked out these highly-talented individuals to help
 							you out! Click on any of their tiles to find out more about them and get connected!
 						</p>
-						<div className={INSTRUCTOR_CAROUSEL}>
-							{userList && userList.map((data, index) => {
-								if (!data.new_sign_up && data.id !== docSnap.id){
-									return (
-										<InstructorCard key={index} data={data}/>
-									)
-								}
-							})}
-						</div>
+						{loadingRecUsers ? 
+							<CircularProgress></CircularProgress>
+						:
+							<div className={INSTRUCTOR_CAROUSEL}>
+								{userList && userList.map((data, index) => {
+									if (!data.new_sign_up && data.id !== docSnap.id){
+										return (
+											<InstructorCard key={index} data={data}/>
+										)
+									}
+								})}
+							</div>
+						}
 					</div>
 				<div>
 						<h2 className={HEADER}>Pick Up a New Hobby</h2>

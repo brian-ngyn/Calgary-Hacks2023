@@ -7,6 +7,7 @@ import Register from './pages/Register'
 import { UserAuthContextProvider } from './authentication/UserAuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import Teach from './pages/Teach'
+import Message from './pages/Message'
 import SamplePage2 from './pages/SamplePage2'
 import InstructorsPage from './pages/InstructorsPage'
 import Navbar from './components/Navbar'
@@ -26,6 +27,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/page2" element={<ProtectedRoute><SamplePage2 /></ProtectedRoute>} />
               <Route path="/teach" element={<ProtectedRoute><Teach /></ProtectedRoute>} />
+              <Route path="/message" element={<ProtectedRoute><Message /></ProtectedRoute>} />
               <Route path="/instructors/:skill" element={<ProtectedRoute><InstructorsPage/></ProtectedRoute>} />
               <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/portfolio/:name" element={<ProtectedRoute><Portfolio /></ProtectedRoute>} />

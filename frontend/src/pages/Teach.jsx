@@ -115,23 +115,20 @@ function Teach() {
 
   return (
     <>
-      <div className="min-h-screen px-[18%] py-[5%] bg-white font-Varela">
-        <div className="flex flex-col space-y-16">
-          <div className="grid grid-cols-1">
-            <div className="text-5xl text-bold pb-[5%]">
-              My Portfolios
-            </div>
-          </div>
-          <div className="grid grid-cols-3 grid-rows-2">
-            <div className="col-span-1 row-span-2">
-              <Avatar src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F47%2F2022%2F06%2F03%2Fdachshund-two-pups-in-lap-1298367873-2000.jpg" sx={{ width: 250, height: 250 }} />
-            </div>
-            <div className="flex flex-col pt-10 col-span-1 row-span-2 text-4xl font-semibold">
-              <div>
-                {docSnap.fname} {docSnap.lname}
-              </div>
-            </div>
-          </div>
+      <div className="min-h-screen px-[18%] py-[5%] bg-white">
+        <div className="flex flex-col space-y-10">
+						<div className="grid grid-cols-3 grid-rows-2">
+							<div className="col-span-1 row-span-2">
+								<Avatar src={docSnap.photoUrl} sx={{ width: 250, height: 250 }} />
+							</div>
+							<div className="flex flex-col pt-10 col-span-2 row-span-2 text-4xl">
+								<h2 className="mb-5 w-full font-header">Welcome Back, {docSnap.fName}</h2>
+								<p className="font-body font-thin text-2xl w-11/12">
+									Want to teach a skill? Create a portfolio to showcase your background and 
+									connect with peers in your community who would like to learn from you!
+								</p>
+							</div>
+					</div>
           <div className="grid grid-cols-3">
             <div className="col-span-3 text-5xl pt-[4%]">
               Portfolios

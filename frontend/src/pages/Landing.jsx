@@ -57,14 +57,14 @@ function Landing() {
 
   return (
     <>
-      <div className="bg-white text-black font-Varela min-h-screen">
+      <div className="bg-white text-black font-body min-h-screen">
         {
           !user && (
             <div className="bg-white text-black min-h-screen">
               <div className="grid grid-cols-2 pt-[2%] items-center space-y-10 pr-[15%] pl-[10%]">
                 <div className="flex flex-col items-end justify-center font-semibold space-y-10">
                   <div className="space-y-5 p-[20%]">
-                    <div className="text-5xl">
+                    <div className="text-5xl font-header">
                       Discover a new passion
                     </div>
                     <div className="font-light text-2xl">
@@ -82,11 +82,11 @@ function Landing() {
                 {error && <Alert variant="danger">{error}</Alert>}
               </div>
               <div className="flex flex-col pt-[5%] px-[15%] space-y-12">
-                <div className="text-5xl font-semibold">
+                <div className="text-5xl font-semibold font-header">
                   <div>
                     How it Works
                   </div>
-                  <div className="text-center font-light text-2xl flex mt-10 gap-y-10 flex-col items-center justify-center">
+                  <div className="text-center font-light text-2xl font-bodyflex mt-10 gap-y-10 flex-col items-center justify-center">
                     <img src={money} width="35%"></img>
                     <div className="w-[75%]">
                       Earn money by sharing your skills with peers in your community
@@ -102,7 +102,7 @@ function Landing() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-5xl font-semibold">
+                  <div className="text-5xl font-semibold font-header">
                     Testimonials
                   </div>
                   <div className="grid grid-cols-2 items-center">

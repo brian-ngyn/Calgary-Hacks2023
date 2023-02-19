@@ -4,7 +4,29 @@ import { Avatar, Button } from "@mui/material";
 function Portfolio() {
   const location = useLocation();
   const data = location.state;
-  console.log(data);
+  console.log("portfolio data",data);
+
+  const displayMedia = (url) => {
+    console.log(url)
+    if(url.includes(".mp4")){
+      console.log("video");
+      return (
+      <div className="bg-gray-500 lg:col-span-2 col-span-4">
+        <video width="100%" height="100%" controls>
+          <source src={url} type="video/mp4"></source>
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      )
+    }
+    console.log("image")
+    return (
+      <div className="bg-gray-500 lg:col-span-2 col-span-4">
+        <img src={url} className="object-cover" width="100%" height="100%"></img>
+      </div>
+    )
+    
+  }
 
   return (
     <>
@@ -33,25 +55,8 @@ function Portfolio() {
           <div className="text-3xl font-header pt-[5%]">
             Portfolio
           </div>
-          <div className="grid grid-cols-3 grid-rows-3 gap-5 min-h-[36rem] px-[1%] pt-5">
-            <div className="bg-gray-500 col-span-1 row-span-1 min-h">
-              Test1
-            </div>
-            <div className="bg-gray-500 col-span-1 row-span-2">
-              Test2
-            </div>
-            <div className="bg-gray-500">
-              Test3
-            </div>
-            <div className="bg-gray-500 col-span-1 row-span-2">
-              Test4
-            </div>
-            <div className="bg-gray-500">
-              Test5
-            </div>
-            <div className="bg-gray-500 col-span-2 row-span-1">
-              Test6
-            </div>
+          <div className="grid grid-cols-4 gap-5 px-[1%] pt-5">
+            {data.media.map((med) => displayMedia(med))}
           </div>
         </div>
 			</div>

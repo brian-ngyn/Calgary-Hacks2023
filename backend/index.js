@@ -36,7 +36,6 @@ admin.initializeApp({
 const db = admin.firestore()
 const bucket = admin.storage().bucket()
 
-app.use(cors());
 app.use(express.json());
 app.use(express.static("./public"));
 
@@ -73,10 +72,10 @@ app.get("/bad-words/:text", (req, res) => {
 });
 
 
-app.post('/createPortfolio/:uuid', (req, res) => {
+app.post('/createPortfolio', (req, res) => {
   let existingPortfolio = []
   db.collection('user')
-    .doc(req.params.uuid)
+    .doc(req.body.udid)
     .get()
     .then((snapshot) => {
       existingPortfolio = snapshot.data().portfolio
@@ -88,7 +87,7 @@ app.post('/createPortfolio/:uuid', (req, res) => {
       })
 
       db.collection('user')
-        .doc(req.params.uuid)
+        .doc(req.body.udid)
         .update({
           portfolio: existingPortfolio,
         })
@@ -189,11 +188,27 @@ app.get("/getUser/:uuid", (req, res) => {
   });
 });
 
-app.get("/portfolios/:uuid", (req, res) => {
-  db.collection("user").doc(req.params.uuid).collection("portfolios").get().then((snapshot) => {
+app.get("/portfolio/:uuid/:skill", (req, res) => {
+  db.collection("user").doc(req.params.uuid).get().then((snapshot) => {
     const portfolios = [];
-    snapshot.forEach((doc) => {
-      portfolios.push(doc.data());
+    snapshot.data().portfolio.forEach((doc) => {
+      if(doc.skill === req.params.skill){
+        portfolios.push(doc);
+      }
+    });
+
+    res.send(portfolios);
+  }).catch((err) => {
+    res.send(err);
+  });
+});
+
+app.get("/portfolios/:uuid", (req, res) => {
+  db.collection("user").doc(req.params.uuid).get().then((snapshot) => {
+    const portfolios = [];
+    snapshot.data().portfolio.forEach((doc) => {
+      console.log(doc);
+      portfolios.push(doc);
     });
     res.send(portfolios);
   }).catch((err) => {

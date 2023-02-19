@@ -25,7 +25,7 @@ function InstructorCard( props ) {
 
 	const selectSkill = (skill) => {
 		console.log(skill);
-		navigate("/portfolio/" + data.id, { state: data });
+		navigate("/portfolio/" + skill.skill, { state: skill });
 	}
 
 	useEffect(() => {
@@ -81,7 +81,7 @@ function InstructorCard( props ) {
 						<ul className="flex flex-wrap gap-2 justify-items-start justify-center">
 							{data.portfolio.map((data, index) => {
 								return(
-									<li key={index} className="text-sm bg-accent/10 rounded-full h-5 px-2 text-accent hover:cursor-pointer" onClick={()=>selectSkill(data.skill)}>{data.skill}</li>
+									<li key={index} className="text-sm bg-accent/10 rounded-full h-5 px-2 text-accent hover:cursor-pointer" onClick={()=>selectSkill(data)}>{data.skill}</li>
 								)
 							})}
 						</ul>

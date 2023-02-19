@@ -17,7 +17,7 @@ function SkillCard( props ) {
 					{data.name}
 				</div>
 				<div className="text-sm">
-					Active users: {data.usersInvolved}
+					Instructor count: {data.count / 2}
 				</div>
 			</div>
 			<div className="lg:w-[60px] lg:h-[60px] w-[50px] h-[50px]">

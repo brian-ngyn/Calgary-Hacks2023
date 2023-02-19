@@ -1,9 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@font-face {
-  font-family: Varela;
-  src: url("./assets/VarelaRound-Regular.ttf");
+@layer base {
+	@font-face {
+		font-family: UbuntuBold;
+		src: url("./assets/Ubuntu-Bold.ttf");
+	}
+	@font-face {
+		font-family: UbuntuBody;
+		src: url("./assets/Ubuntu-Regular.ttf");
+	}
 }
 
 .no-scrollbar::-webkit-scrollbar {

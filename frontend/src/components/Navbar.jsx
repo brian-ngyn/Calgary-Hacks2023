@@ -26,7 +26,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="sticky top-0 bg-white m-w-full font-Varela border-b-2 border-black/5 pb-3 z-10">
+      <div className="sticky top-0 bg-white m-w-full font-header border-b-2 border-black/5 pb-3 z-10">
         <div className="font-light text-s flex justify-between px-[9%] pt-6">
           <IconButton disableRipple component={Link} to="/home" style={{ backgroundColor: 'transparent' }}>
             <div className="text-2xl font-bold text-black">

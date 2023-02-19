@@ -4,7 +4,7 @@ import SkillCard from "../components/SkillCard";
 import { useUserAuth } from "../authentication/UserAuthContext";
 import axios from "axios";
 
-const HEADER = "text-4xl font-black mb-5 text-black border-b-4 border-accent w-fit pb-2"
+const HEADER = "text-4xl font-header mb-5 text-black border-b-4 border-accent w-fit pb-2"
 const INSTRUCTOR_CAROUSEL = "flex flex-row overflow-scroll h-fit gap-12 pb-5 no-scrollbar" 
 const HOBBY_GRID = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 pb-10" 
 
@@ -24,7 +24,7 @@ function Home() {
   return (
     <>
 		{skillData ? (
-			<div className="px-[9%] bg-white font-Varela text-black">
+			<div className="px-[9%] bg-white font-body text-black">
 				<div>
 					<div className="h-1/2 pt-10 mb-5">
 						<h2 className={HEADER}>Recommended Instructors</h2>
@@ -36,7 +36,7 @@ function Home() {
 							{userList && userList.map((data, index) => {
 								if (!data.new_sign_up && data.id !== docSnap.id){
 									return (
-										<InstructorCard key={index} data={data} user={docSnap}/>
+										<InstructorCard key={index} data={data}/>
 									)
 								}
 							})}

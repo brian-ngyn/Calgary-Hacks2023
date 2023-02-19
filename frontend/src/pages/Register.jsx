@@ -13,6 +13,8 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { useTheme } from '@mui/material/styles';
 import InputLabel from '@mui/material/InputLabel';
+import {storage} from "../authentication/firebaseConfig.js"
+import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage"
 
 function Register() {
   const { user, updateDB } = useUserAuth();
@@ -34,7 +36,8 @@ function Register() {
   const [birthday, setBirthday] = React.useState(dayjs());
   const [funFact, setFunFact] = useState("");
   const [interests, setInterests] = useState([]);
-
+  const [photo, setPhoto] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg");
   const submitRegistration = () => {
     updateDB({
       new_sign_up: false,
@@ -46,11 +49,41 @@ function Register() {
       major: major,
       birthday: dayjs(birthday).format('MM/DD/YYYY'),
       funFact: funFact,
-      skills: interests
+      skills: interests,
+      photoUrl: photoUrl
     }).then(() => {
       navigate("/home");
     });
   };
+
+  const handleFileUpload = (event) => {
+    if (!event.target.files){
+      return;
+    }
+    const file = event.target.files[0];
+    console.log(file);
+    setPhoto(event.target.files[0]);
+    const storageRef = ref(storage, `/profilephotos/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+              "state_changed",
+              (snapshot) => {
+                  const percent = Math.round(
+                      (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                  );
+                  // update progress
+                  console.log("percent",percent);
+              },
+              (err) => console.log(err),
+              () => {
+                  // download url
+                  getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                      console.log("url",url);
+                      setPhotoUrl(url);
+                  });
+              }
+          ); 
+  }
 
   const handleInterestChange = (event) => {
     const {
@@ -180,12 +213,25 @@ function Register() {
                     onChange={(e) => setFunFact(e.target.value)}
                   />
                 </div>
+                <div className="col-span-2">
+                  <Button
+                    component="label"
+                    variant="outlined"
+                    onChange={(e)=>handleFileUpload(e)}
+                  >
+                    Upload Profile Photo
+                    <input type="file" accept=".png, .jpg, .jpeg" hidden />
+                  </Button>
+                </div>
+                {photo ? <div className="col-span-1">
+                    Photo: {photo.name}
+                </div> : null}
                 <div className="flex justify-center col-span-2">
                   {major != "" && funFact != "" ? (
                     <Button
                       variant="contained"
                       onClick={submitRegistration}
-                      style={{ backgroundColor: "#BE2A2C", color: "#000000" }}
+                      style={{ backgroundColor: "#BE2A2C", color: "#FFFFFF" }}
                     >
                       Submit
                     </Button>

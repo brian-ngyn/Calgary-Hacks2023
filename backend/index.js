@@ -43,11 +43,15 @@ app.get("/", (req, res) => {
 });
 
 app.post("/createPortfolio/:uuid", (req, res) => {
-  db.collection("users").doc(req.params.uuid).collection("portfolio").add({
+  db.collection("user").doc(req.params.uuid).collection("portfolios").add({
     "skill": req.body.skill,
     "description": req.body.description,
     "hourlyRate": req.body.hourlyRate,
     "media": req.body.media,
+    }).then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+    }).catch((error) => {
+      console.error("Error adding document: ", error);
     });
   res.send("Portfolio Created");
 });
@@ -65,8 +69,33 @@ app.get("/skills", (req, res) => {
   });
 });
 
+app.get("/instructors/:sport", (req, res) => {
+  db.collection("user").get().then((snapshot) => {
+    const instructors = [];
+    snapshot.forEach((doc) => {
+      doc.get("portfolios").forEach((portfolio) => {
+        if (portfolio.get("skill") === req.params.sport) {
+          instructors.push(doc.data());
+        }
+      });
+    });
+    res.send(instructors);
+  }).catch((err) => {
+    res.send(err);
+  });
+});
 
-
+app.get("/portfolios/:uuid", (req, res) => {
+  db.collection("user").doc(req.params.uuid).collection("portfolios").get().then((snapshot) => {
+    const portfolios = [];
+    snapshot.forEach((doc) => {
+      portfolios.push(doc.data());
+    });
+    res.send(portfolios);
+  }).catch((err) => {
+    res.send(err);
+  });
+});
 
 const port = process.env.PORT || 3001;
 if (process.env.ENVIRONMENT === 'production') {

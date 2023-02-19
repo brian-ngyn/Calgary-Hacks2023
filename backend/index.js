@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-//const cors = require('cors')
+const cors = require('cors')
 const multer = require('multer')
 var crypto = require('crypto')
 var shasum = crypto.createHash('sha1')
@@ -32,13 +32,15 @@ admin.initializeApp({
 const db = admin.firestore()
 const bucket = admin.storage().bucket()
 
+app.use(cors());
 app.use(express.json());
 app.use(express.static("./public"));
 
-app.post('/createPortfolio/:uuid', (req, res) => {
+app.put('/createPortfolio', (req, res) => {
   let existingPortfolio = []
+  console.log(req.body);
   db.collection('user')
-    .doc(req.params.uuid)
+    .doc(req.body.udid)
     .get()
     .then((snapshot) => {
       existingPortfolio = snapshot.data().portfolio
@@ -50,7 +52,7 @@ app.post('/createPortfolio/:uuid', (req, res) => {
       })
 
       db.collection('user')
-        .doc(req.params.uuid)
+        .doc(req.body.udid)
         .update({
           portfolio: existingPortfolio,
         })

@@ -31,13 +31,13 @@ function Register() {
 
   const [year, setYear] = useState("1");
   const [major, setMajor] = useState("");
-  const [field1, setField1] = useState("");
-  const [field2, setField2] = useState("");
   const [birthday, setBirthday] = React.useState(dayjs());
   const [funFact, setFunFact] = useState("");
   const [interests, setInterests] = useState([]);
   const [photo, setPhoto] = useState("");
   const [photoUrl, setPhotoUrl] = useState("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg");
+  const [portfolio, setPortfolio] = useState([]);
+
   const submitRegistration = () => {
     updateDB({
       new_sign_up: false,
@@ -49,8 +49,9 @@ function Register() {
       major: major,
       birthday: dayjs(birthday).format('MM/DD/YYYY'),
       funFact: funFact,
-      skills: interests,
-      photoUrl: photoUrl
+      interests: interests,
+      photoUrl: photoUrl,
+      portfolio: portfolio
     }).then(() => {
       navigate("/home");
     });

@@ -86,7 +86,7 @@ function Landing() {
                   <div>
                     How it Works
                   </div>
-                  <div className="text-center font-light text-2xl font-bodyflex mt-10 gap-y-10 flex-col items-center justify-center">
+                  <div className="text-center text-2xl font-body flex mt-10 gap-y-10 flex-col items-center justify-center">
                     <img src={money} width="35%"></img>
                     <div className="w-[75%]">
                       Earn money by sharing your skills with peers in your community

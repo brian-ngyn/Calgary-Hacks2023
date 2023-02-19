@@ -1,20 +1,17 @@
-import Chats from "../components/Chats";
-import Sidebar from "../components/Sidebar";
+import { firebaseAuth } from "../authentication/firebaseConfig";
+import { useAuthState } from "react-firebase-hooks/auth";
+import "../App.css";
+import ChatBox from "../components/ChatBox";
 
 
 function Message() {
+  const [user] = useAuthState(firebaseAuth);
+
   return (
-    <>
-      <div>
-        <div className="bg-white text-black min-h-screen">
-          <div className="flex flex-col justify-center items-center h-screen">
-            <Sidebar />
-            <Chats />
-          </div>
-        </div>
-      </div>
-    </>
-  )
+    <div className="App">
+          <ChatBox />
+    </div>
+  );
 }
 
 export default Message;

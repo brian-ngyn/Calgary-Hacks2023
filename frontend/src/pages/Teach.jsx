@@ -8,9 +8,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import { TextField } from "@mui/material";
 import Select from '@mui/material/Select';
-import { borderRadius } from "@mui/system";
 import {storage} from "../authentication/firebaseConfig.js"
 import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage"
 import PortfolioCard from "../components/PortfolioCard";
@@ -145,7 +143,10 @@ function Teach() {
 						</div>
 					</div>
 					<h2 className="font-header col-span-3 text-5xl pt-[4%] mb-10">Portfolios</h2>
-					<div className="flex flex-row overflow-scroll h-fit gap-12 pb-5 no-scrollbar">
+					<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-fit w-fit gap-12 pb-5">
+						<PortfolioCard/>
+						<PortfolioCard/>
+						<PortfolioCard/>
 						<PortfolioCard/>
 						<PortfolioCard/>
 						<IconButton onClick={handleClickOpen} style={{ backgroundColor: 'transparent' }}>

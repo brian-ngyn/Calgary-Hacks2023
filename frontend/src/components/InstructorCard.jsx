@@ -18,7 +18,7 @@ function InstructorCard( props ) {
 	const isSwappable = (skill) => data.interests.includes(skill)
 
 	useEffect(() => {
-		if (user.categories.every(isSwappable)) {
+		if (user.interests.every(isSwappable)) {
 			setSwap(true);
 		}
 	}, []);

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import InstructorCard from "../components/InstructorCard";
 import SkillCard from "../components/SkillCard";
-import { UserData, SkillsData } from "../../data.js";
+import { UserData } from "../../data.js";
 import { useUserAuth } from "../authentication/UserAuthContext";
 import axios from "axios";
 
-const HEADER = "text-4xl font-black mb-5 text-accent"
+const HEADER = "text-4xl font-black mb-5 text-black border-b-4 border-accent w-fit pb-2"
 const INSTRUCTOR_CAROUSEL = "flex flex-row overflow-scroll h-fit gap-12 pb-5 no-scrollbar" 
 const HOBBY_GRID = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 pb-10" 
 

@@ -11,7 +11,7 @@ function InstructorsPage() {
 	const data = location.state;
 
 	useEffect(() => {
-		axios.get(`https://4ltkqflxgpkhdmqkrjm5w3ia340gceyn.lambda-url.us-west-1.on.aws/instructors/${data.name}`)
+		axios.get(`https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/instructors/${data.name}`)
 		.then((response) => console.log(response))
 	}, []);
 

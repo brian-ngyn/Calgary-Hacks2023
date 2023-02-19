@@ -23,7 +23,7 @@ function Teach() {
   };
 
   useEffect(() => {
-    axios.get("https://4ltkqflxgpkhdmqkrjm5w3ia340gceyn.lambda-url.us-west-1.on.aws/skills").then((res) => {
+    axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/skills").then((res) => {
       setSkillList(res.data);
       console.log(res.data);
     })

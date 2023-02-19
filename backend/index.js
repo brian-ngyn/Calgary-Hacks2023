@@ -115,27 +115,32 @@ app.get('/instructors/:sport', (req, res) => {
   });
 
   app.get("/reccomendations/:uuid", (req, res) => {
+    let users = [];
+    let interests = [];
     db.collection("user").doc(req.params.uuid).get().then((user) => {
-      const reccomendations = [];
+      interests = user.data().interests;
+      console.log(interests);
+
       db.collection("user").get().then((allUsers) => {
-        allUsers.forEach((otherUser) => {
-          otherUser.get("portfolios").then((otherUserPortfolio) => {
-            otherUserPortfolio.forEach((portfolio) => {
-              portfolios.get().then((portfolio) => {
-                if (user.get("skills").includes(portfolio.get("skill") && req.params.uuid != otherUser.id)) {
-                  reccomendations.push(otherUser.data());
-                }
-              });
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            });
-        });
-      });
-      reccomendations
-      res.send(reccomendations);
+        allUsers.forEach((secondUser) => {
+          let check = true
+          if(secondUser.id !== req.params.uuid) {
+       
+            secondUser.data().portfolio.forEach((portfolio) => {
+              if (interests.includes(portfolio.skill) && check) {
+                users.push(secondUser.data())
+                check = false
+              }
+            })
+          }
+        })
+
+        res.send(users)
+      })
     });
+
+
+
   });
     
 

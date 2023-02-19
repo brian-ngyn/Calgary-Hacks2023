@@ -4,6 +4,7 @@ import { Avatar, Button } from "@mui/material";
 function Portfolio() {
   const location = useLocation();
   const data = location.state;
+  console.log("portfolio data",data);
 
   const displayMedia = (url) => {
     console.log(url)
@@ -55,7 +56,7 @@ function Portfolio() {
             Portfolio
           </div>
           <div className="grid grid-cols-4 gap-5 px-[1%] pt-5">
-            {data.portfolio[0].media.map((med) => displayMedia(med))}
+            {data.media.map((med) => displayMedia(med))}
           </div>
         </div>
 			</div>

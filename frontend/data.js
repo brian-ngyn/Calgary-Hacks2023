@@ -8,8 +8,9 @@ export const UserData = [
 		interests: [
 			"Tennis",
 			"Guitar",
+			"Arts and Craft",
 			"Piano",
-			"Darts",
+			"Darts"
 		],
 		assets: [
 			""

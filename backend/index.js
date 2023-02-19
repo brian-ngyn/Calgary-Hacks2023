@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-//const cors = require('cors')
+const cors = require('cors')
 const multer = require('multer')
 var crypto = require('crypto')
 var shasum = crypto.createHash('sha1')
@@ -63,6 +63,19 @@ app.post('/createPortfolio/:uuid', (req, res) => {
         })
     })
 })
+
+get.app("/portfolio/:uuid/:skill", (req, res) => {
+  db.collection("user").doc(req.params.uuid).collection("portfolios").get().then((snapshot) => {
+    const portfolios = [];
+    snapshot.data().portfolio.forEach((doc) => {
+      if(doc.skill === req.params.skill)
+        portfolios.push(doc.data());
+    });
+    res.send(portfolios);
+  }).catch((err) => {
+    res.send(err);
+  });
+});
 
 app.get('/skills', (req, res) => {
   console.log('Inside skills')

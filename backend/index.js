@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-//const cors = require('cors')
+const cors = require('cors')
 const multer = require('multer')
 var crypto = require('crypto')
 var shasum = crypto.createHash('sha1')
@@ -32,13 +32,15 @@ admin.initializeApp({
 const db = admin.firestore()
 const bucket = admin.storage().bucket()
 
+app.use(cors());
 app.use(express.json());
 app.use(express.static("./public"));
 
-app.post('/createPortfolio/:uuid', (req, res) => {
+app.put('/createPortfolio', (req, res) => {
   let existingPortfolio = []
+  console.log(req.body);
   db.collection('user')
-    .doc(req.params.uuid)
+    .doc(req.body.udid)
     .get()
     .then((snapshot) => {
       existingPortfolio = snapshot.data().portfolio
@@ -50,7 +52,7 @@ app.post('/createPortfolio/:uuid', (req, res) => {
       })
 
       db.collection('user')
-        .doc(req.params.uuid)
+        .doc(req.body.udid)
         .update({
           portfolio: existingPortfolio,
         })
@@ -63,6 +65,19 @@ app.post('/createPortfolio/:uuid', (req, res) => {
         })
     })
 })
+
+get.app("/portfolio/:uuid/:skill", (req, res) => {
+  db.collection("user").doc(req.params.uuid).collection("portfolios").get().then((snapshot) => {
+    const portfolios = [];
+    snapshot.data().portfolio.forEach((doc) => {
+      if(doc.skill === req.params.skill)
+        portfolios.push(doc.data());
+    });
+    res.send(portfolios);
+  }).catch((err) => {
+    res.send(err);
+  });
+});
 
 app.get('/skills', (req, res) => {
   console.log('Inside skills')

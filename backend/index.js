@@ -40,22 +40,32 @@ app.get('/', (req, res) => {
 })
 
 app.post('/createPortfolio/:uuid', (req, res) => {
+  let existingPortfolio = []
   db.collection('user')
     .doc(req.params.uuid)
-    .collection('portfolios')
-    .add({
-      skill: req.body.skill,
-      description: req.body.description,
-      hourlyRate: req.body.hourlyRate,
-      media: req.body.media,
+    .get()
+    .then((snapshot) => {
+      existingPortfolio = snapshot.data().portfolio
+      existingPortfolio.push({
+        skill: req.body.skill,
+        description: req.body.description,
+        hourlyRate: req.body.hourlyRate,
+        media: req.body.media,
+      })
+
+      db.collection('user')
+        .doc(req.params.uuid)
+        .update({
+          portfolio: existingPortfolio,
+        })
+        .then((docRef) => {
+          console.log('Document written with ID: ', docRef.id)
+          res.send('Portfolio Created')
+        })
+        .catch((error) => {
+          console.error('Error adding document: ', error)
+        })
     })
-    .then((docRef) => {
-      console.log('Document written with ID: ', docRef.id)
-    })
-    .catch((error) => {
-      console.error('Error adding document: ', error)
-    })
-  res.send('Portfolio Created')
 })
 
 app.get('/skills', (req, res) => {
@@ -75,45 +85,23 @@ app.get('/skills', (req, res) => {
 })
 
 app.get('/instructors/:sport', (req, res) => {
-  let docIDs = []
-  let promises = []
+  let instructors = []
   db.collection('user')
-    .listDocuments()
-    .then((snapshot) => {
-      const instructors = []
-      snapshot.forEach((doc1) => {
-        console.log(doc1.id)
-        docIDs.push(doc1.id)
-      })
-
-      docIDs.forEach((docID) => {
-        let promise = db
-          .collection('user')
-          .doc(docID)
-          .collection('portfolios')
-          .get()
-
-        promises.push(promise)
-      })
-
-      queryPromises = []
-      Promise.all(promises).then((snapshots) => {
-        snapshots.forEach((snapshot) => {
-          snapshot.forEach((doc) => {
-            if (doc.data().skill === req.params.sport) {
-              // get id of user
-              queryPromises.push()
+    .get()
+    .then((allUsers) => {
+      allUsers.forEach((user) => {
+        let portfolioArray = user.data().portfolio
+        if (portfolioArray) {
+          portfolioArray.forEach((portfolio) => {
+            console.log(portfolio.skill, req.params.sport)
+            if (portfolio.skill === req.params.sport) {
+              console.log('here')
+              instructors.push(user.data())
             }
           })
-        })
-        Promise.all(queryPromises).then((snapshots) => {
-          snapshots.forEach((snapshot) => {
-            instructors.push(snapshot)
-
-          })
-          res.send(instructors)
-        })
+        }
       })
+      res.send(instructors)
     })
 })
 

@@ -10,7 +10,7 @@ function SkillCard( props ) {
 	return (
 		<div
 			onClick={handleClick}
-			className="bg-accent/5 rounded lg:p-4 p-2 flex justify-between"
+			className="bg-accent/5 rounded p-4 flex justify-between hover:scale-[102%] transition-scale hover:cursor-pointer"
 		>
 			<div className="flex flex-col justify-between">
 				<div className="text-xl">
@@ -20,8 +20,8 @@ function SkillCard( props ) {
 					Active users: {data.usersInvolved}
 				</div>
 			</div>
-			<div className="lg:w-[80px] w-[50px]">
-				<img src={"https://static.vecteezy.com/system/resources/previews/002/323/513/original/piano-isolated-icon-music-instrument-icon-symbol-free-vector.jpg"} width="100%" height="100%">
+			<div className="lg:w-[60px] lg:h-[60px] w-[50px] h-[50px]">
+				<img src={data.picture_Url} width="100%" height="100%">
 				</img>
 			</div>
 		</div>

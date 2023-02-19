@@ -12,7 +12,7 @@ const HOBBY_GRID = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 pb-10"
 function Home() {
 	const { docSnap } = useUserAuth();
 	const [skillData, setSkillData] = useState(null);
-	console.log(docSnap);
+	// console.log(docSnap);
 
 	useEffect(() => {
 		axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/skills")
@@ -33,7 +33,7 @@ function Home() {
 						<div className={INSTRUCTOR_CAROUSEL}>
 							{UserData.map((data, index) => {
 								return (
-									<InstructorCard key={index} data={data}/>
+									<InstructorCard key={index} data={data} user={docSnap}/>
 								)
 							})}
 						</div>

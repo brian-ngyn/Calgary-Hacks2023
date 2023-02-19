@@ -10,6 +10,7 @@ import SamplePage1 from './pages/SamplePage1'
 import SamplePage2 from './pages/SamplePage2'
 import InstructorsPage from './pages/InstructorsPage'
 import Navbar from './components/Navbar'
+import Portfolio from './pages/Portfolio'
 
 function App() {
   
@@ -25,6 +26,7 @@ function App() {
             <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
             <Route path="/landing" element={<Landing />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/portfolio/:name" element={<Portfolio />} />
             <Route
               path="*"
               element={<Navigate to="/landing" replace />}

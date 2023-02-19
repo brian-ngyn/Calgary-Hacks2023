@@ -8,7 +8,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
+import { TextField } from "@mui/material";
 import Select from '@mui/material/Select';
+import { borderRadius } from "@mui/system";
 import {storage} from "../authentication/firebaseConfig.js"
 import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage"
 import PortfolioCard from "../components/PortfolioCard";
@@ -17,6 +19,7 @@ function Teach() {
   const { docSnap } = useUserAuth();
   const [open, setOpen] = useState(false);
   const [skillList, setSkillList] = useState([]);
+  const [mySkillList, setMySkillList] = useState([]);
   const [skill, setSkill] = useState("");
   const [description, setDescription] = useState("");
   const [hourlyRate, setHourlyRate] = useState("");
@@ -62,7 +65,7 @@ function Teach() {
       hourlyRate: hourlyRate,
       media: mediaURLs,
       udid: docSnap.id
-    }
+    };
     setDescription("");
     setHourlyRate("");
     setHourlyRate("");
@@ -81,16 +84,31 @@ function Teach() {
     // }).then((res) => {
     //   console.log("res", res);
     // })
-    axios.put("http://localhost:3001/createPortfolio", data).then((res) => {
+    // axios.post("http://localhost:3001/createPortfolio", data).then((res) => {
+    //   console.log("res", res);
+    // });
+
+    axios.post("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/createPortfolio", data).then((res) => {
       console.log("res", res);
     });
+
+    // axios.post("http://localhost:3001/createPortfolio", data).then((res) => {
+    //   console.log("res", res);
+    // });
+
+    // const res = await axios.post("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/createPortfolio", { data: data} );
     console.log(data);
   }
 
   useEffect(() => {
     axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/skills").then((res) => {
       setSkillList(res.data);
-      console.log("skillList", res.data);
+      // console.log("skillList", res.data);
+    })
+
+    axios.get("https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/portfolios/" + docSnap.id).then((res) => {
+      setMySkillList(res.data);
+      console.log("mySkillList", res.data);
     })
   }, []);
 
@@ -143,12 +161,12 @@ function Teach() {
 						</div>
 					</div>
 					<h2 className="font-header col-span-3 text-5xl pt-[4%] mb-10">Portfolios</h2>
-					<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-fit w-fit gap-12 pb-5">
-						<PortfolioCard/>
-						<PortfolioCard/>
-						<PortfolioCard/>
-						<PortfolioCard/>
-						<PortfolioCard/>
+					<div className="flex flex-row overflow-scroll h-fit gap-12 pb-5 no-scrollbar">
+						{mySkillList.map((curr_skill) => {
+              return (
+                <PortfolioCard data={curr_skill}/>
+              )
+            })}
 						<IconButton onClick={handleClickOpen} style={{ backgroundColor: 'transparent' }}>
 							<img src="/images/addportfolio.svg" />
 						</IconButton>

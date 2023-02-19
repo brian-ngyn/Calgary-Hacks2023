@@ -1,10 +1,16 @@
 import { useUserAuth } from "../authentication/UserAuthContext";
 
-function PortfolioCard() {
+function PortfolioCard(props) {
+	const data = props.data;
+
 	return ( 
-		<div className="shadow-md w-[250px] h-[280px] bg-[#FFFFFF] flex flex-col justify-center items-center rounded-2xl">
-			<img className="w-[200px] h-[180px] mb-5" src={""}/>
-			<h2>SPORT</h2>
+		<div className="shadow-md bg-[#FFFFFF] justify-center items-center rounded-2xl p-2">
+			<img className="object-cover mb-5" src={data.media[0]}/>
+			<div>
+				<div>
+					{data.skill}
+				</div>
+			</div>
 		</div>		
 	 );
 }

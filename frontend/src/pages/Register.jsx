@@ -1,46 +1,77 @@
-import { TextField } from "@mui/material";
+import * as React from "react";
+import dayjs from 'dayjs';
+import { TextField, FormControl } from "@mui/material";
 import { useUserAuth } from "../authentication/UserAuthContext";
 import { useState } from "react";
-import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import { useTheme } from '@mui/material/styles';
+import InputLabel from '@mui/material/InputLabel';
 
 function Register() {
   const { user, updateDB } = useUserAuth();
   const navigate = useNavigate();
-  const selections = [
-    {
-      label: "selectionA",
-      value: "Selection A"
-    },
-    {
-      label: "selectionB",
-      value: "Selection B"
-    },
-    {
-      label: "selectionC",
-      value: "Selection C"
-    },
-    {
-      label: "selectionD",
-      value: "Selection D"
-    },
+  const interestSelections = [
+    'Interest A',
+    'Interest B',
+    'Interest C',
+    'Interest D',
+    'Interest E',
+    'Interest F',
+    'Interest G',
   ]
 
-  const [selectionfield, setSelectionField] = useState("Selection A");
+  const [year, setYear] = useState("1");
+  const [major, setMajor] = useState("");
   const [field1, setField1] = useState("");
   const [field2, setField2] = useState("");
+  const [birthday, setBirthday] = React.useState(dayjs());
+  const [funFact, setFunFact] = useState("");
+  const [interests, setInterests] = useState([]);
 
   const submitRegistration = () => {
     updateDB({
       new_sign_up: false,
-      selectionfield: selectionfield,
-      field1: field1,
-      field2: field2,
+      id: user.uid,
+      fName: user.displayName.split(" ")[0],
+      lName: user.displayName.split(" ")[1],
+      email: user.email,
+      year: year,
+      major: major,
+      birthday: dayjs(birthday).format('MM/DD/YYYY'),
+      funFact: funFact,
+      skills: interests
     }).then(() => {
       navigate("/home");
     });
   };
+
+  const handleInterestChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setInterests(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+  function getStyles(name, interestName, theme) {
+    return {
+      fontWeight:
+        interestName.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
+
+  const theme = useTheme();
 
   return (
     <>
@@ -48,7 +79,7 @@ function Register() {
         <div className="bg-white text-black min-h-screen">
           <div className="flex flex-col justify-center items-center h-screen">
             <div className="bg-white grid grid-cols-1 p-[2%] border gap-y-10 relative">
-              <div className="bg-yellow-300 absolute top-0 min-w-full border-2 border-yellow-300" />
+              <div className="bg-red absolute top-0 min-w-full border-2 border-red" />
               <div className="text-xl col-span-1 place-self-center">
                 Finish Your Signup
               </div>
@@ -83,46 +114,78 @@ function Register() {
                 <div className="col-span-1">
                   <TextField
                     required
-                    id="outlined-select"
-                    select
-                    label="Select"
-                    value={selectionfield} onChange={(e) => setSelectionField(e.target.value)}
-                    defaultValue="Selection A"
-                    style={{ width: 250 }}
-                  >
-                    {selections.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </div>
-                <div className="col-span-1">
-                  <TextField
-                    required
                     id="outlined"
-                    label="Field 1"
-                    value={field1}
+                    label="Year"
+                    value={year}
                     style={{ width: 250 }}
-                    onChange={(e) => setField1(e.target.value)}
+                    onChange={(e) => setYear(e.target.value)}
                   />
                 </div>
                 <div className="col-span-1">
                   <TextField
                     required
                     id="outlined"
-                    label="Field 2"
-                    value={field2}
+                    label="Major"
+                    value={major}
                     style={{ width: 250 }}
-                    onChange={(e) => setField2(e.target.value)}
+                    onChange={(e) => setMajor(e.target.value)}
+                  />
+                </div>
+                <div className="col-span-1">
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      disableFuture
+                      label="Birthday"
+                      openTo="year"
+                      views={['year', 'month', 'day']}
+                      value={birthday}
+                      onChange={(newValue) => {
+                        setBirthday(newValue);
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </div>
+                <div className="col-span-1">
+                  <FormControl>
+                    <InputLabel id="demo-multiple-name-label">Interests</InputLabel>
+                    <Select
+                      labelId="demo-multiple-name-label"
+                      id="demo-multiple-name"
+                      multiple
+                      value={interests}
+                      onChange={handleInterestChange}
+                      input={<OutlinedInput label="Name" />}
+                      style={{ width: 250 }}
+                    >
+                      {interestSelections.map((name) => (
+                        <MenuItem
+                          key={name}
+                          value={name}
+                          style={getStyles(name, interests, theme)}
+                        >
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="col-span-1">
+                  <TextField
+                    required
+                    id="outlined"
+                    label="Fun fact about yourself"
+                    value={funFact}
+                    style={{ width: 250 }}
+                    onChange={(e) => setFunFact(e.target.value)}
                   />
                 </div>
                 <div className="flex justify-center col-span-2">
-                  {field1 != "" && field2 != "" ? (
+                  {major != "" && funFact != "" ? (
                     <Button
                       variant="contained"
                       onClick={submitRegistration}
-                      style={{ backgroundColor: "#FDE047", color: "#000000" }}
+                      style={{ backgroundColor: "#BE2A2C", color: "#000000" }}
                     >
                       Submit
                     </Button>

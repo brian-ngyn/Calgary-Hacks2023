@@ -17,6 +17,8 @@ export function UserAuthContextProvider({ children }) {
 	const [docSnap, setDocSnap] = useState(null);
 
 	function logout() {
+		setUser(null);
+		setDocSnap(null);
 		return signOut(firebaseAuth);
 	}
 

@@ -47,6 +47,7 @@ function populateUser(){
         continue
       }
       let {portfolios, ...rest} = item;
+      console.log(rest);
       
 
       var userDB = db.collection("user")
@@ -119,9 +120,9 @@ function populateDatabase(dst, name) {
   }
 
 // populateDatabase("./data/portfolios", "Portfolios");
-// populateDatabase("./data/categories", "Categories");
-//populateDatabase("./data/users.json", "user");
-populateUser();
+populateDatabase("./data/categories.json", "Categories");
+populateDatabase("./data/users.json", "user");
+//populateUser();
 // populateDatabase("./data/clubs", "Clubs");
 // populateDatabase("./data/msgss", "Messages");
 

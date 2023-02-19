@@ -35,6 +35,12 @@ function Navbar() {
           </IconButton>
           {(docSnap && !docSnap.new_sign_up) ? (
             <div className="group flex space-x-5 self-end pb-4 transition-all duration-300 ease-in-out">
+              <Link
+                className="text-l text-black hover:cursor-pointer hover:before:scale-x-100 hover:before:origin-left relative before:w-full before:h-0.5 before:origin-right before:transition-transform before:duration-300 before:scale-x-0 before:bg-[#545454] before:absolute before:left-0 before:bottom-0"
+                to="/teach"
+              >
+                Teach
+              </Link>
               <div
                 className="text-l text-black hover:cursor-pointer hover:before:scale-x-100 hover:before:origin-left relative before:w-full before:h-0.5 before:origin-right before:transition-transform before:duration-300 before:scale-x-0 before:bg-[#545454] before:absolute before:left-0 before:bottom-0"
                 onClick={(e) => logout(e)}

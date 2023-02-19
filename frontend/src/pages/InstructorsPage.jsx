@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { UserData } from "../../data.js";
 import InstructorCard from "../components/InstructorCard";
 
-const INSTRUCTORS_GRID = "grid grid-cols-5 place-content-evenly gap-10" 
+const INSTRUCTORS_GRID = "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 place-content-evenly gap-10" 
 
 function InstructorsPage() {
 	const location = useLocation();

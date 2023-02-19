@@ -5,7 +5,7 @@ import { useUserAuth } from "../authentication/UserAuthContext";
 
 const HEADER = "text-4xl font-bold mb-5"
 const INSTRUCTOR_CAROUSEL = "flex flex-row overflow-scroll h-fit gap-12 pb-5 no-scrollbar" 
-const HOBBY_GRID = "grid grid-cols-4 gap-10 pb-10" 
+const HOBBY_GRID = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-10" 
 
 function Home() {
 	const { docSnap } = useUserAuth();

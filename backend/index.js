@@ -1,10 +1,10 @@
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const multer = require("multer");
-var crypto = require("crypto");
-var shasum = crypto.createHash("sha1");
-const serverless = require('serverless-http');
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const multer = require('multer')
+var crypto = require('crypto')
+var shasum = crypto.createHash('sha1')
+const serverless = require('serverless-http')
 
 const admin = require('firebase-admin')
 
@@ -32,77 +32,113 @@ admin.initializeApp({
 const db = admin.firestore()
 const bucket = admin.storage().bucket()
 
+app.use(express.json())
+app.use(express.static('./public'))
 
-app.use(cors());
-app.options('*', cors())
-app.use(express.json());
-app.use(express.static("./public"));
+app.get('/', (req, res) => {
+  res.send('Hello World')
+})
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+app.post('/createPortfolio/:uuid', (req, res) => {
+  db.collection('user')
+    .doc(req.params.uuid)
+    .collection('portfolios')
+    .add({
+      skill: req.body.skill,
+      description: req.body.description,
+      hourlyRate: req.body.hourlyRate,
+      media: req.body.media,
+    })
+    .then((docRef) => {
+      console.log('Document written with ID: ', docRef.id)
+    })
+    .catch((error) => {
+      console.error('Error adding document: ', error)
+    })
+  res.send('Portfolio Created')
+})
 
-app.post("/createPortfolio/:uuid", (req, res) => {
-  db.collection("user").doc(req.params.uuid).collection("portfolios").add({
-    "skill": req.body.skill,
-    "description": req.body.description,
-    "hourlyRate": req.body.hourlyRate,
-    "media": req.body.media,
-    }).then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
-    }).catch((error) => {
-      console.error("Error adding document: ", error);
-    });
-  res.send("Portfolio Created");
-});
+app.get('/skills', (req, res) => {
+  console.log('Inside skills')
+  db.collection('categories')
+    .get()
+    .then((snapshot) => {
+      const skills = []
+      snapshot.forEach((doc) => {
+        skills.push(doc.data())
+      })
+      res.send(skills)
+    })
+    .catch((err) => {
+      res.send(err)
+    })
+})
 
-app.get("/skills", (req, res) => {
-  console.log("Inside skills")
-  db.collection("categories").get().then((snapshot) => {
-    const skills = [];
-    snapshot.forEach((doc) => {
-      skills.push(doc.data());
-    });
-    res.send(skills);
-  }).catch((err) => {
-    res.send(err);
-  });
-});
+app.get('/instructors/:sport', (req, res) => {
+  let docIDs = []
+  let promises = []
+  db.collection('user')
+    .listDocuments()
+    .then((snapshot) => {
+      const instructors = []
+      snapshot.forEach((doc1) => {
+        console.log(doc1.id)
+        docIDs.push(doc1.id)
+      })
 
-app.get("/instructors/:sport", (req, res) => {
-  db.collection("user").get().then((snapshot) => {
-    const instructors = [];
-    snapshot.forEach((doc) => {
-      doc.get("portfolios").forEach((portfolio) => {
-        if (portfolio.get("skill") === req.params.sport) {
-          instructors.push(doc.data());
-        }
-      });
-    });
-    res.send(instructors);
-  }).catch((err) => {
-    res.send(err);
-  });
-});
+      docIDs.forEach((docID) => {
+        let promise = db
+          .collection('user')
+          .doc(docID)
+          .collection('portfolios')
+          .get()
 
-app.get("/portfolios/:uuid", (req, res) => {
-  db.collection("user").doc(req.params.uuid).collection("portfolios").get().then((snapshot) => {
-    const portfolios = [];
-    snapshot.forEach((doc) => {
-      portfolios.push(doc.data());
-    });
-    res.send(portfolios);
-  }).catch((err) => {
-    res.send(err);
-  });
-});
+        promises.push(promise)
+      })
 
-const port = process.env.PORT || 3001;
+      queryPromises = []
+      Promise.all(promises).then((snapshots) => {
+        snapshots.forEach((snapshot) => {
+          snapshot.forEach((doc) => {
+            if (doc.data().skill === req.params.sport) {
+              // get id of user
+              queryPromises.push()
+            }
+          })
+        })
+        Promise.all(queryPromises).then((snapshots) => {
+          snapshots.forEach((snapshot) => {
+            instructors.push(snapshot)
+
+          })
+          res.send(instructors)
+        })
+      })
+    })
+})
+
+app.get('/portfolios/:uuid', (req, res) => {
+  db.collection('user')
+    .doc(req.params.uuid)
+    .collection('portfolios')
+    .get()
+    .then((snapshot) => {
+      const portfolios = []
+      snapshot.forEach((doc) => {
+        portfolios.push(doc.data())
+      })
+      res.send(portfolios)
+    })
+    .catch((err) => {
+      res.send(err)
+    })
+})
+
+const port = process.env.PORT || 3001
 if (process.env.ENVIRONMENT === 'production') {
-    exports.handler = serverless(app);
+  exports.handler = serverless(app)
 } else {
-    app.listen(port, () => {
-        console.log(`Server is listening on port ${port}.`);
-    });
+  app.listen(port, () => {
+    console.log(`Server is listening on port ${port}.`)
+  })
 }
-

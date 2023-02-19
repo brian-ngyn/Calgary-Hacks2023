@@ -72,53 +72,18 @@ function Teach() {
               <div className="text-3xl font font-semibold">
                 Create a new portfolio
               </div>
-              <div className="grid grid-cols-2">
-                <div className="">
-                  <div className='text-xl col-span-2'>
-                    Skill
-                  </div>
-                  <div>
-                    {skillList.map((skill, index) => {
-                      return (
-                        <div className="col-span-1">
-                          <img src={skill.picture_Url} />
-                          <div>
-                            {skill.name}
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
+              <div className="grid grid-cols-2 gap-5">
                 <div className="text-xl col-span-3">
-                  <div>
+                  <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
                     Description
-                  </div>
-                  <div>
-                    <TextField
-                      required
-                      id="outlined"
-                      label="Description"
-                      value={description}
-                      style={{ width: 250 }}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </div>
+                  </label>
+                  <textarea rows="10" class="font-thin border w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline" id="description" type="text" placeholder="Description"></textarea>
                 </div>
                 <div className="text-xl col-span-3">
-                  <div>
+                  <label class="block text-gray-700 text-sm font-bold mb-2" for="hourly-rate">
                     Hourly Rate
-                  </div>
-                  <div>
-                  <TextField
-                      required
-                      id="outlined"
-                      label="Hourly Rate"
-                      value={hourlyRate}
-                      style={{ width: 250 }}
-                      onChange={(e) => setHourlyRate(e.target.value)}
-                    />
-                  </div>
+                  </label>
+                  <input class="border w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline" id="hourly-rate" type="number" placeholder="Hourly Rate"></input>
                 </div>
               </div>
             </div>

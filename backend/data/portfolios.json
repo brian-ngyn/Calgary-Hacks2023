@@ -1,0 +1,55 @@
+[
+    {
+      "id": "001",
+      "portfolios": 
+      [
+        {
+            "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fjordan-whitfield-BhfE1IgcsA8-unsplash.jpg?alt=media&token=ad852c08-cb52-497d-9a6e-ab84ea54c67f",
+            "hourlyRate": 10,
+            "skillTaught": "Piano"
+        },
+        {
+            "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fbenjamin-hayward-YIO9Fb7BJIU-unsplash.jpg?alt=media&token=c0eb9476-16f2-40af-a896-24c248ca7a72",
+            "hourlyRate": 30,
+            "skillTaught": "Snowboarding"
+        }
+      ]
+    },
+    {
+        "id": "002",
+        "portfolios": 
+        [
+          {
+              "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fjordan-whitfield-BhfE1IgcsA8-unsplash.jpg?alt=media&token=ad852c08-cb52-497d-9a6e-ab84ea54c67f",
+              "hourlyRate": 10,
+              "skillTaught": "Piano"
+          },
+          {
+              "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fde-an-sun-b57RqS-nQ1c-unsplash.jpg?alt=media&token=57c84e7b-2cd3-410c-bc3a-a44b45bbc92c",
+              "hourlyRate": 21,
+              "skillTaught": "Guitar"
+          }
+        ]
+    },
+    {
+        "id": "003",
+        "portfolios": 
+        [
+          {
+              "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fjordan-whitfield-BhfE1IgcsA8-unsplash.jpg?alt=media&token=ad852c08-cb52-497d-9a6e-ab84ea54c67f",
+              "hourlyRate": 10,
+              "skillTaught": "Piano"
+          },
+          {
+              "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fde-an-sun-b57RqS-nQ1c-unsplash.jpg?alt=media&token=57c84e7b-2cd3-410c-bc3a-a44b45bbc92c",
+              "hourlyRate": 21,
+              "skillTaught": "Guitar"
+          },
+          {
+            "picture_Url": "https://firebasestorage.googleapis.com/v0/b/calgary-hacks2023.appspot.com/o/images%2Fbenjamin-hayward-YIO9Fb7BJIU-unsplash.jpg?alt=media&token=c0eb9476-16f2-40af-a896-24c248ca7a72",
+            "hourlyRate": 30,
+            "skillTaught": "Snowboarding"
+        }
+        ]
+    }
+]

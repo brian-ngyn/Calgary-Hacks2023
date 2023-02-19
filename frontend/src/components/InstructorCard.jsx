@@ -1,9 +1,10 @@
-
+import { useNavigate } from "react-router-dom";
 
 function InstructorCard( props ) {
+	const navigate = useNavigate();
 	const data = props.data;
 	const handleClick = () => {
-		console.log(data)
+		navigate("/portfolio/" + data.firstName + data.lastName, { state: data });
 	}
 
 	return(  

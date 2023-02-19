@@ -13,6 +13,7 @@ import Select from '@mui/material/Select';
 import { borderRadius } from "@mui/system";
 import {storage} from "../authentication/firebaseConfig.js"
 import {ref, uploadBytesResumable, getDownloadURL} from "firebase/storage"
+import PortfolioCard from "../components/PortfolioCard";
 
 function Teach() {
   const { docSnap } = useUserAuth();
@@ -23,6 +24,7 @@ function Teach() {
   const [hourlyRate, setHourlyRate] = useState("");
   const [media, setMedia] = useState([]);
   const [mediaURLs, setMediaURLs] = useState([]);
+	console.log(docSnap);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,7 +71,7 @@ function Teach() {
     setMedia([]);
     setMediaURLs([]);
     setOpen(false);
-    axios.post(`https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/createPortfolio/${docSnap.id}`,data)
+    axios.post(`https://jos6ylumd75az7s4a5ajqyaqoi0iafmd.lambda-url.us-west-2.on.aws/createPortfolio/${docSnap.id}`, data)
     console.log(data);
   }
 
@@ -116,28 +118,26 @@ function Teach() {
     <>
       <div className="min-h-screen px-[18%] py-[5%] bg-white">
         <div className="flex flex-col space-y-10">
-						<div className="grid grid-cols-3 grid-rows-2">
-							<div className="col-span-1 row-span-2">
-								<Avatar src={docSnap.photoUrl} sx={{ width: 250, height: 250 }} />
-							</div>
-							<div className="flex flex-col pt-10 col-span-2 row-span-2 text-4xl">
-								<h2 className="mb-5 w-full font-header">Welcome Back, {docSnap.fName}</h2>
-								<p className="font-body font-thin text-2xl w-11/12">
-									Want to teach a skill? Create a portfolio to showcase your background and 
-									connect with peers in your community who would like to learn from you!
-								</p>
-							</div>
+					<div className="grid grid-cols-3 grid-rows-2">
+						<div className="col-span-1 row-span-2">
+							<Avatar src={docSnap.photoUrl} sx={{ width: 250, height: 250 }} />
+						</div>
+						<div className="flex flex-col pt-10 col-span-2 row-span-2 text-4xl">
+							<h2 className="mb-5 w-full font-header">Welcome Back, {docSnap.fName}</h2>
+							<p className="font-body font-thin text-2xl w-11/12">
+								Want to teach a skill? Create a portfolio to showcase your background and 
+								connect with peers in your community who would like to learn from you!
+							</p>
+						</div>
 					</div>
-          <div className="grid grid-cols-3">
-            <div className="col-span-3 text-5xl pt-[4%]">
-              Portfolios
-            </div>
-            <div className="pt-5">
-              <IconButton onClick={handleClickOpen} style={{ backgroundColor: 'transparent' }}>
-                <img src="/images/addportfolio.svg" />
-              </IconButton>
-            </div>
-          </div>
+					<h2 className="font-header col-span-3 text-5xl pt-[4%] mb-10">Portfolios</h2>
+					<div className="flex flex-row overflow-scroll h-fit gap-12 pb-5 no-scrollbar">
+						<PortfolioCard/>
+						<PortfolioCard/>
+						<IconButton onClick={handleClickOpen} style={{ backgroundColor: 'transparent' }}>
+							<img src="/images/addportfolio.svg" />
+						</IconButton>
+					</div>
         </div>
       </div>
       <Dialog

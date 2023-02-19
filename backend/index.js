@@ -69,6 +69,7 @@ app.get("/skills", (req, res) => {
   });
 });
 
+
 app.get("/instructors/:sport", (req, res) => {
   db.collection("user").get().then((snapshot) => {
     const instructors = [];
@@ -80,6 +81,13 @@ app.get("/instructors/:sport", (req, res) => {
       });
     });
     res.send(instructors);
+   });
+   });
+
+app.get("/getUser/:uuid", (req, res) => {
+  db.collection("users").doc(req.params.uuid).get().then((doc) => {
+    res.send(doc.data());
+
   }).catch((err) => {
     res.send(err);
   });

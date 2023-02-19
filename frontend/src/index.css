@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 @font-face {
-	font-family: Varela;
-	src: url("./assets/VarelaRound-Regular.ttf");
+  font-family: Varela;
+  src: url("./assets/VarelaRound-Regular.ttf");
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

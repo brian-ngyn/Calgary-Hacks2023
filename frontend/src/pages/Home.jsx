@@ -1,10 +1,10 @@
 import InstructorCard from "../components/InstructorCard";
-import HobbyCard from "../components/HobbyCard";
-import { UserData } from "../../data.js";
+import SkillCard from "../components/SkillCard";
+import { UserData, SkillsData } from "../../data.js";
 
 const HEADER = "text-4xl font-bold mb-5"
 const INSTRUCTOR_CAROUSEL = "flex flex-row overflow-scroll h-fit gap-12 pb-5" 
-const HOBBY_GRID = "flex flex-row flex-wrap gap-12 pb-10" 
+const HOBBY_GRID = "grid grid-cols-4 gap-10 pb-10" 
 
 
 function Home() {
@@ -25,24 +25,12 @@ function Home() {
 					<div>
 						<h2 className={HEADER}>Pick Up a New Hobby</h2>
 						<div className={HOBBY_GRID}>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
-							<HobbyCard/>
+							{
+								SkillsData.map((data, index) => {
+									return (
+										<SkillCard key={index} data={data}/>
+									)
+							})}
 						</div>
 					</div>
 				</div>

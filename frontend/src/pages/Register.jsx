@@ -38,6 +38,7 @@ function Register() {
   const submitRegistration = () => {
     updateDB({
       new_sign_up: false,
+      id: user.uid,
       fName: user.displayName.split(" ")[0],
       lName: user.displayName.split(" ")[1],
       email: user.email,
@@ -45,7 +46,7 @@ function Register() {
       major: major,
       birthday: dayjs(birthday).format('MM/DD/YYYY'),
       funFact: funFact,
-      interests: interests
+      skills: interests
     }).then(() => {
       navigate("/home");
     });

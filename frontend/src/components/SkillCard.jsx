@@ -10,10 +10,10 @@ function SkillCard( props ) {
 	return (
 		<div
 			onClick={handleClick}
-			className="bg-accent/5 rounded p-4 flex justify-between hover:scale-[102%] transition-scale hover:cursor-pointer duration-150"
+			className="bg-accent/5 rounded p-4 flex justify-between hover:scale-[102%] transition-scale hover:cursor-pointer duration-150 font-body"
 		>
 			<div className="flex flex-col justify-between">
-				<div className="text-xl">
+				<div className="text-xl font-header">
 					{data.name}
 				</div>
 				<div className="text-sm">

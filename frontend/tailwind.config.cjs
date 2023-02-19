@@ -10,7 +10,8 @@ module.exports = {
 				'accent': '#BE2A2C'
       },
 			fontFamily: {
-				Varela: "Varela"
+				header: ["UbuntuBold"],
+				body: ["UbuntuBody"]
 			}
     },
   },

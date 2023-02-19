@@ -31,7 +31,7 @@ function InstructorCard( props ) {
 
 	return(  
 		<div
-			className="shadow-md flex flex-col w-[250px] h-[250px] rounded-lg justify-center items-center text-center hover:cursor-pointer hover:bg-black/5 ease-in duration-300 static"
+			className="shadow-md flex flex-col w-[250px] h-[250px] rounded-lg justify-center items-center text-center hover:cursor-pointer hover:bg-black/5 ease-in duration-300 static font-body"
 			onClick={() => handleClick()}
 		>
 			{swap && 
@@ -43,7 +43,7 @@ function InstructorCard( props ) {
 			}
 			<img className="w-[100px] h-[100px] rounded-full mb-4" src={data.photoUrl}/>
 			<div className="px-5 w-60">
-				<h2 className="font-bold text-2xl mb-1" >{data.fName} {data.lName}</h2>
+				<h2 className="font-header text-2xl mb-1" >{data.fName} {data.lName}</h2>
 				<ul className="flex flex-wrap gap-2 justify-items-start justify-center">
 					{data.interests.slice(0, 3).map((data, index) => {
 						return(

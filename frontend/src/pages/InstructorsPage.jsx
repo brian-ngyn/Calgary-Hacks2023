@@ -18,8 +18,8 @@ function InstructorsPage() {
 	}, []);
 
 	return (  
-		<div className="min-h-screen bg-white font-Varela px-[9%] pt-10">
-			<h2 className="text-5xl font-bold mb-5 border-b-4 border-accent w-fit pb-5">{data.name} Instructors</h2>
+		<div className="min-h-screen bg-white font-body px-[9%] pt-10">
+			<h2 className="text-5xl font-header mb-5 border-b-4 border-accent w-fit pb-5">{data.name} Instructors</h2>
 			<p className="text-xl w-1/2 mb-10">
 				Find peers that also share your love for <span className="text-2xl font-bold mr-1">{data.name}!</span> 
 				These individuals love what they do and would love to share their experience with others too. Select from the 

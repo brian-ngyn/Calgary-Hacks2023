@@ -1,10 +1,10 @@
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const multer = require("multer");
-var crypto = require("crypto");
-var shasum = crypto.createHash("sha1");
-const serverless = require('serverless-http');
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const multer = require('multer')
+var crypto = require('crypto')
+var shasum = crypto.createHash('sha1')
+const serverless = require('serverless-http')
 
 const admin = require('firebase-admin')
 
@@ -32,57 +32,75 @@ admin.initializeApp({
 const db = admin.firestore()
 const bucket = admin.storage().bucket()
 
-
-app.use(cors());
-app.options('*', cors())
 app.use(express.json());
 app.use(express.static("./public"));
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+app.post('/createPortfolio/:uuid', (req, res) => {
+  let existingPortfolio = []
+  db.collection('user')
+    .doc(req.params.uuid)
+    .get()
+    .then((snapshot) => {
+      existingPortfolio = snapshot.data().portfolio
+      existingPortfolio.push({
+        skill: req.body.skill,
+        description: req.body.description,
+        hourlyRate: req.body.hourlyRate,
+        media: req.body.media,
+      })
 
-app.post("/createPortfolio/:uuid", (req, res) => {
-  db.collection("user").doc(req.params.uuid).collection("portfolios").add({
-    "skill": req.body.skill,
-    "description": req.body.description,
-    "hourlyRate": req.body.hourlyRate,
-    "media": req.body.media,
-    }).then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
-    }).catch((error) => {
-      console.error("Error adding document: ", error);
-    });
-  res.send("Portfolio Created");
-});
+      db.collection('user')
+        .doc(req.params.uuid)
+        .update({
+          portfolio: existingPortfolio,
+        })
+        .then((docRef) => {
+          console.log('Document written with ID: ', docRef.id)
+          res.send('Portfolio Created')
+        })
+        .catch((error) => {
+          console.error('Error adding document: ', error)
+        })
+    })
+})
 
-app.get("/skills", (req, res) => {
-  console.log("Inside skills")
-  db.collection("categories").get().then((snapshot) => {
-    const skills = [];
-    snapshot.forEach((doc) => {
-      skills.push(doc.data());
-    });
-    res.send(skills);
-  }).catch((err) => {
-    res.send(err);
-  });
-});
+app.get('/skills', (req, res) => {
+  console.log('Inside skills')
+  db.collection('categories')
+    .get()
+    .then((snapshot) => {
+      const skills = []
+      snapshot.forEach((doc) => {
+        skills.push(doc.data())
+      })
+      res.send(skills)
+    })
+    .catch((err) => {
+      res.send(err)
+    })
+})
 
-
-app.get("/instructors/:sport", (req, res) => {
-  db.collection("user").get().then((snapshot) => {
-    const instructors = [];
-    snapshot.forEach((doc) => {
-      doc.get("portfolios").forEach((portfolio) => {
-        if (portfolio.get("skill") === req.params.sport) {
-          instructors.push(doc.data());
+app.get('/instructors/:sport', (req, res) => {
+  let instructors = []
+  db.collection('user')
+    .get()
+    .then((allUsers) => {
+      allUsers.forEach((user) => {
+        let portfolioArray = user.data().portfolio
+        if (portfolioArray) {
+          portfolioArray.forEach((portfolio) => {
+            console.log(portfolio.skill, req.params.sport)
+            if (portfolio.skill === req.params.sport) {
+              console.log('here')
+              instructors.push(user.data())
+            }
+          })
         }
-      });
-    });
-    res.send(instructors);
-   });
-  });
+      })
+      res.send(instructors)
+    })
+})
+     
 
   app.get("/allUsers", (req, res) => {  
     db.collection("user").get().then((snapshot) => {  
@@ -97,27 +115,30 @@ app.get("/instructors/:sport", (req, res) => {
   });
 
   app.get("/reccomendations/:uuid", (req, res) => {
+    let users = [];
+    let interests = [];
     db.collection("user").doc(req.params.uuid).get().then((user) => {
-      const reccomendations = [];
+      interests = user.data().interests;
+      console.log(interests);
+
       db.collection("user").get().then((allUsers) => {
-        allUsers.forEach((otherUser) => {
-          otherUser.get("portfolios").then((otherUserPortfolio) => {
-            otherUserPortfolio.forEach((portfolio) => {
-              portfolios.get().then((portfolio) => {
-                if (user.get("skills").includes(portfolio.get("skill") && req.params.uuid != otherUser.id)) {
-                  reccomendations.push(otherUser.data());
-                }
-              });
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            });
-        });
-      });
-      reccomendations
-      res.send(reccomendations);
+        allUsers.forEach((secondUser) => {
+          let check = true
+          if(secondUser.id !== req.params.uuid) {
+       
+            secondUser.data().portfolio.forEach((portfolio) => {
+              if (interests.includes(portfolio.skill) && check) {
+                users.push(secondUser.data())
+                check = false
+              }
+            })
+          }
+        })
+
+        res.send(users)
+      })
     });
+
   });
     
 
@@ -127,23 +148,6 @@ app.get("/getUser/:uuid", (req, res) => {
 
   }).catch((err) => {
     res.send(err);
-  });
-});
-
-app.get("/getCount/:skill/:uuid", (req, res) => {
-  let count = 0;
-  db.collection("user").get().then((snapshot) => {
-    snapshot.forEach((user) => {
-      console.log(user);
-      user.data().portfolio.forEach((portfolio) => {
-        if (portfolio.skill === req.params.skill && user.id !== req.params.uuid) {
-          count++;
-        }
-      });
-    });
-    res.send([count]);
-  }).catch((err) => {
-    console.log(err);
   });
 });
 
@@ -159,12 +163,12 @@ app.get("/portfolios/:uuid", (req, res) => {
   });
 });
 
-const port = process.env.PORT || 3001;
-if (process.env.ENVIRONMENT === 'production') {
-    exports.handler = serverless(app);
-} else {
-    app.listen(port, () => {
-        console.log(`Server is listening on port ${port}.`);
-    });
-}
 
+const port = process.env.PORT || 3001
+if (process.env.ENVIRONMENT === 'production') {
+  exports.handler = serverless(app)
+} else {
+  app.listen(port, () => {
+    console.log(`Server is listening on port ${port}.`)
+  })
+}
